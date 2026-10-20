@@ -1,0 +1,1484 @@
+<!doctype html>
+<html lang="en-IE">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Your feed was designed to never end. This is where it does. What endless scrolling does to your brain, body, relationships and time, and what helps.">
+<meta name="theme-color" content="#0A0E26" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#ECEEF4" media="(prefers-color-scheme: light)">
+<meta property="og:title" content="End of Feed">
+<meta property="og:description" content="Your feed was designed to never end. This is where it does.">
+<meta property="og:url" content="https://endoffeed.com/">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='12' fill='%23F0312B'/%3E%3C/svg%3E">
+<title>End of Feed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: a lock-screen poster. Giant condensed headlines, one notification-red badge as the recurring signal, each section a "notification" you have to read. */
+:root{
+  --bg:#ECEEF4;
+  --surface:#FFFFFF;
+  --ink:#0D1233;
+  --muted:#4A5175;
+  --line:#CDD1E0;
+  --alert:#F0312B;
+  --alert-ink:#FFFFFF;
+  --warn:#D98A00;
+  --go:#1F9D55;
+  --blue:#2340F5;
+  --blue-soft:#DCE1FF;
+  --display:"Big Shoulders Display","Impact","Arial Narrow",sans-serif;
+  --body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0A0E26;--surface:#131943;--ink:#ECEEFA;--muted:#A5ABCF;--line:#2A3268;
+    --alert:#FF4A42;--alert-ink:#FFFFFF;--warn:#FFB938;--go:#34C759;--blue:#8E9DFF;--blue-soft:#1C2563;color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0A0E26;--surface:#131943;--ink:#ECEEFA;--muted:#A5ABCF;--line:#2A3268;
+  --alert:#FF4A42;--alert-ink:#FFFFFF;--warn:#FFB938;--go:#34C759;--blue:#8E9DFF;--blue-soft:#1C2563;color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:1.0625rem;line-height:1.6;margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:var(--blue)}
+a:focus-visible,button:focus-visible,input:focus-visible,label:focus-within{outline:3px solid var(--alert);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);font-weight:900;line-height:.92;text-transform:uppercase;text-wrap:balance;margin:0}
+p{margin:0}
+.prose{max-width:62ch}
+.label{font-family:var(--mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+/* top bar */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bg);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:10px}
+.logo{font-family:var(--display);font-weight:900;font-size:1.5rem;letter-spacing:.02em;text-transform:uppercase;text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:8px}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--alert)}
+.nav{display:flex;gap:18px;flex-wrap:wrap;font-family:var(--mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.08em}
+.nav a{color:var(--muted);text-decoration:none}
+.nav a:hover{color:var(--ink)}
+@media (max-width:760px){.nav{display:none}}
+
+/* hero */
+.hero{padding-block:56px 40px}
+.hero h1{font-size:clamp(4rem,15vw,12.5rem);letter-spacing:-.01em;position:relative;display:inline-block}
+.badge{border:0;cursor:pointer;z-index:1;position:absolute;top:.04em;right:-.42em;background:var(--alert);color:var(--alert-ink);font-family:var(--mono);font-weight:700;font-size:clamp(1rem,3.2vw,2.2rem);line-height:1;padding:.32em .5em;border-radius:999px;transform-origin:center;font-variant-numeric:tabular-nums}
+.badge.pop{animation:pop .5s ease}
+.hero h1 .up{position:relative;white-space:nowrap}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.25)}100%{transform:scale(1)}}
+.hero-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:32px;margin-top:28px;align-items:end}
+.hero-grid > *{min-width:0}
+.hero .lede{font-size:clamp(1.2rem,2.4vw,1.5rem);line-height:1.4;max-width:34ch}
+.lock{background:var(--ink);color:var(--bg);border-radius:22px;padding:20px 22px;display:grid;gap:6px}
+.lock .label{color:var(--bg);opacity:.7}
+.lock .clock{font-family:var(--mono);font-weight:700;font-size:2.4rem;font-variant-numeric:tabular-nums;line-height:1.1}
+.lock p{font-size:.95rem;line-height:1.45}
+@media (max-width:760px){.hero-grid{grid-template-columns:1fr}}
+
+/* stat strip */
+.strip{border-block:2px solid var(--ink);margin-block:24px 0}
+.strip .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.strip .wrap:last-child{display:block;border-top:1px solid var(--line);padding-block:8px}
+.world{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:16px}
+.place{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;display:grid;gap:8px;align-content:start}
+.place .where{font-family:var(--mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);font-weight:700}
+.place b{font-family:var(--display);font-weight:900;font-size:clamp(2.8rem,6vw,3.8rem);line-height:.9;font-variant-numeric:tabular-nums}
+.place.hot b{color:var(--alert)}
+.place p{font-size:.98rem}
+.apps{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.apps span{font-family:var(--mono);font-size:.78rem;background:var(--blue-soft);color:var(--ink);padding:5px 9px;border-radius:6px}
+.stat{padding-block:22px;padding-inline:0 18px;display:grid;gap:6px;align-content:start}
+.stat + .stat{border-left:1px solid var(--line);padding-left:18px}
+.stat b{font-family:var(--display);font-weight:900;font-size:clamp(2.6rem,6vw,3.8rem);line-height:.9;font-variant-numeric:tabular-nums}
+.stat span{font-size:.92rem;color:var(--muted);line-height:1.4}
+@media (max-width:760px){
+  .strip .wrap{grid-template-columns:1fr 1fr}
+  .stat:nth-child(3){border-left:0;padding-left:0}
+  .stat:nth-child(n+3){border-top:1px solid var(--line)}
+}
+
+/* sections */
+section.chapter{padding-block:72px;border-bottom:1px solid var(--line)}
+.chapter-head{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;margin-bottom:36px}
+.chapter-head h2{font-size:clamp(3rem,9vw,6.5rem)}
+.chapter-head h2 em{font-style:normal;color:var(--alert)}
+.chapter-head .prose{font-size:1.2rem;color:var(--muted)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:28px}
+.cols > *{min-width:0}
+.point{display:grid;gap:10px;align-content:start}
+.point h3{font-size:1.9rem}
+.point p{color:var(--ink)}
+.note{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--alert);border-radius:6px;padding:20px 22px;display:grid;gap:8px}
+.note .label{color:var(--alert)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.split > *{min-width:0}
+@media (max-width:860px){.split{grid-template-columns:1fr}}
+
+/* brain battery */
+.brain-head{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);align-items:end;gap:32px}
+.brain-text{display:grid;gap:14px}
+@media (max-width:860px){.brain-head{grid-template-columns:1fr}}
+.clock-strip{display:grid;gap:14px;margin-bottom:32px}
+.strip-lede{font-size:clamp(1.6rem,3.2vw,2.2rem)}
+.phones{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:12px}
+@media (max-width:960px){.phones{grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:150px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px}.mini{scroll-snap-align:start}}
+.mini{position:relative;aspect-ratio:9/17;max-width:100%;border-radius:22px;background:linear-gradient(160deg,#1C2766,#0B1030);color:#F2F4FF;border:3px solid #070A1E;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:16px 8px;text-align:center}
+.mini.night{background:linear-gradient(160deg,#0F1438,#04061A)}
+.mini .city{font-family:var(--mono);font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.8}
+.mini .t{font-family:var(--display);font-weight:900;font-size:2.2rem;line-height:1;margin-top:10px;font-variant-numeric:tabular-nums}
+.mini .d{font-size:.68rem;opacity:.75;margin-top:4px}
+.mini .bubble{position:absolute;left:6px;right:6px;top:46%;background:rgba(255,255,255,.95);color:#0D1233;border-radius:12px;padding:8px;font-size:.74rem;line-height:1.3;text-align:start;display:flex;gap:6px;align-items:flex-start;transform:translateY(-14px) scale(.96);opacity:0;transition:transform .35s ease,opacity .35s ease}
+.mini .bubble i{width:10px;height:10px;border-radius:3px;background:#F0312B;flex:none;margin-top:3px}
+.mini.ping .bubble{opacity:1;transform:none}
+.mini .homebar{position:absolute;bottom:8px;left:50%;width:36%;height:3px;border-radius:2px;background:rgba(255,255,255,.55);transform:translateX(-50%)}
+.conn-box{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;display:grid;gap:10px}
+.conn-svg{display:block;width:100%;height:auto;max-width:100%}
+.conn-gaze{stroke:var(--blue);stroke-width:3;stroke-dasharray:6 6;transition:opacity .6s}
+.conn-bars rect{fill:var(--line);transition:fill .4s}
+.conn-bars rect.on{fill:var(--blue)}
+.conn-bars.mid rect.on{fill:var(--warn)}
+.conn-bars.low rect.on{fill:var(--alert)}
+.conn-body,.conn-head{fill:var(--ink)}
+.conn-eye{fill:var(--surface)}
+.conn-table{fill:var(--muted)}
+.conn-phone{fill:var(--ink);transition:opacity .5s}
+.conn-glow{fill:var(--alert);opacity:0;transition:opacity .3s}
+.conn-glow.on{opacity:.45}
+.conn-right{transform-box:fill-box;transform-origin:50% 100%;transition:transform .5s ease}
+.conn-right.down{transform:translate(-12px,14px) rotate(-25deg)}
+.neck-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px}
+.neck-svg{display:block;width:100%;max-width:220px;height:auto}
+.neck-body{fill:var(--ink)}
+.neck-eye{fill:var(--surface)}
+.neck-arm{fill:none;stroke:var(--ink);stroke-width:10;stroke-linecap:round;stroke-linejoin:round}
+.neck-slab{fill:var(--ink)}
+.neck-screen{fill:var(--alert)}
+.neck-sight{stroke:var(--alert);stroke-width:1.5;stroke-dasharray:3 4;opacity:.55}
+.neck-ref{stroke:var(--line);stroke-width:2;stroke-dasharray:4 5}
+.neck-arc{fill:none;stroke:var(--alert);stroke-width:3}
+.neck-read{display:grid;gap:6px;justify-items:end;text-align:right}
+.neck-read b{font-family:var(--display);font-weight:900;font-size:clamp(3rem,7vw,4.4rem);line-height:.9;font-variant-numeric:tabular-nums;color:var(--blue);transition:color .6s;white-space:nowrap}
+.neck-read b.mid{color:var(--warn)}
+.neck-read b.high{color:var(--alert)}
+.conn-note{font-weight:700;font-size:1.05rem;min-height:1.6em}
+.battery-box{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;display:grid;gap:12px}
+.battery{display:flex;align-items:center}
+.cells{flex:1;height:84px;border:5px solid var(--ink);border-radius:14px;padding:5px}
+.cells i{display:block;height:100%;width:100%;border-radius:7px;background:var(--blue);transition:background-color .6s}
+.nub{width:10px;height:30px;background:var(--ink);border-radius:0 5px 5px 0}
+.bat-read{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.bat-read b{font-family:var(--display);font-weight:900;font-size:3.4rem;line-height:.9;font-variant-numeric:tabular-nums;min-width:3ch}
+.bat-read span{font-size:.95rem;color:var(--muted);flex:1;min-width:160px}
+.bat-ctl{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:var(--mono);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border:2px solid var(--ink);background:transparent;color:var(--ink);border-radius:999px;padding:8px 12px;cursor:pointer}
+.chip.on{background:var(--ink);color:var(--bg)}
+
+/* what helps: settings panel */
+.help-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.help-grid{grid-template-columns:1fr}}
+.settings{background:var(--surface);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.set-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:18px 20px 12px;border-bottom:1px solid var(--line)}
+.set-title{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:1.8rem;line-height:1}
+.set-count{font-family:var(--mono);font-size:.75rem;color:var(--muted);font-variant-numeric:tabular-nums;text-align:right}
+.set-count.all{color:var(--go);font-weight:700}
+.set-row + .set-row{border-top:1px solid var(--line)}
+.set-btn{width:100%;display:flex;align-items:center;gap:14px;padding:14px 20px;background:transparent;border:0;color:var(--ink);font:inherit;text-align:left;cursor:pointer;min-height:64px}
+.set-ic{width:34px;height:34px;border-radius:9px;flex:none;display:grid;place-items:center;color:#FFFFFF}
+.set-ic svg{width:20px;height:20px}
+.set-txt{flex:1;min-width:0;display:grid;gap:1px}
+.set-txt small{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.set-txt strong{font-size:1.02rem;line-height:1.3}
+.switch{width:52px;height:32px;border-radius:999px;background:var(--line);position:relative;flex:none;transition:background-color .25s}
+.switch i{position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;background:#FFFFFF;box-shadow:0 2px 4px rgba(0,0,0,.25);transition:transform .25s}
+.set-btn[aria-checked="true"] .switch{background:var(--go)}
+.set-btn[aria-checked="true"] .switch i{transform:translateX(20px)}
+.set-detail{padding:0 20px 16px 68px;display:grid;gap:6px;font-size:.95rem}
+.set-detail b{font-weight:700}
+.help-grid .help-cta{grid-column:auto;border-radius:20px;position:sticky;top:80px}
+@media (max-width:860px){.help-grid .help-cta{position:static}}
+.help-cta.done h3{color:var(--go)}
+@media (max-width:560px){.set-detail{padding-left:20px}.set-btn{padding:14px 16px}.set-head{padding:16px}}
+
+.body-cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px;align-items:start}
+.body-cols > *{min-width:0}
+@media (max-width:960px){.body-cols{grid-template-columns:1fr;gap:28px}}
+.body-note{margin-top:32px}
+/* slot machine */
+.psy-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 40px;align-items:start}
+.psy-cols > *{min-width:0}
+@media (max-width:760px){.psy-cols{grid-template-columns:1fr;gap:28px}}
+.sm{display:flex;align-items:flex-start;gap:6px;justify-content:center;padding-top:6px}
+.sm-body{flex:1;max-width:330px;background:linear-gradient(180deg,#E8352D,#B51E17);border-radius:22px 22px 14px 14px;padding:12px 12px 14px;box-shadow:inset 0 -6px 0 rgba(0,0,0,.18),0 10px 22px rgba(0,0,0,.18);display:grid;gap:10px}
+.sm-marquee{display:flex;align-items:center;justify-content:center;gap:8px;background:#7E120D;border-radius:12px;padding:6px 8px}
+.sm-marquee b{font-family:var(--display);font-weight:900;letter-spacing:.14em;color:#FFD34D;font-size:1.15rem;line-height:1}
+.sm-lights{display:flex;gap:4px;height:8px;width:42px;background-image:radial-gradient(circle,#FFD34D 3px,transparent 3.5px);background-size:10px 8px;opacity:.5}
+.sm.win .sm-lights{animation:blink .25s steps(2) 6;opacity:1}
+@keyframes blink{50%{opacity:.2}}
+.sm-window{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;background:#2A0A08;border-radius:10px;padding:6px}
+.sm-reel{height:64px;overflow:hidden;background:linear-gradient(180deg,#D9D9D9,#FFFFFF 30%,#FFFFFF 70%,#D9D9D9);border-radius:6px}
+.sm-strip{will-change:transform}
+.sm-strip span{height:64px;display:grid;place-items:center;font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:1.05rem;letter-spacing:.02em;color:#0D1233;text-align:center;padding:0 2px;line-height:1}
+.sm-strip span.hit{color:#C8231C}
+.sm-strip span.long{font-size:.78rem;line-height:1.05}
+.sm-strip span.junk{color:#5A5F73}
+.sm-strip span.good{color:#FFFFFF;background:#1F9D55}
+.sm-payline{display:none}
+.sm-window::before,.sm-window::after{content:"";position:absolute;top:50%;width:0;height:0;border-top:7px solid transparent;border-bottom:7px solid transparent;transform:translateY(-50%)}
+.sm-window::before{left:-2px;border-left:9px solid #FFD34D}
+.sm-window::after{right:-2px;border-right:9px solid #FFD34D}
+@media (max-width:420px){.sm-strip span{font-size:.92rem}}
+.sm-tray{height:12px;margin:0 24px;background:#7E120D;border-radius:0 0 10px 10px}
+.sm-lever{position:relative;width:34px;height:150px;border:0;background:none;cursor:pointer;padding:0;margin-top:22px;flex:none;touch-action:manipulation}
+.sm-rod{position:absolute;left:14px;top:20px;width:6px;height:96px;background:linear-gradient(90deg,#9AA0AE,#E6E8EE,#9AA0AE);border-radius:3px;transform-origin:50% 100%;transition:transform .18s ease-in}
+.sm-knob{position:absolute;left:5px;top:4px;width:24px;height:24px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#FF6A62,#C8231C 60%,#7E120D);box-shadow:0 3px 6px rgba(0,0,0,.3);transition:transform .18s ease-in}
+.sm-lever::after{content:"";position:absolute;left:8px;top:112px;width:18px;height:18px;border-radius:5px;background:#7E120D}
+.sm-lever.pulled .sm-rod{transform:scaleY(-1) translateY(-2px)}
+.sm-lever.pulled .sm-knob{transform:translateY(176px)}
+.sm-lever:focus-visible{outline:3px solid var(--alert);outline-offset:3px;border-radius:8px}
+.slot-box .conn-note{min-height:3.2em}
+/* experiment diagram */
+.desk{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:6px}
+.desk div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:grid;gap:6px}
+.desk .where{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:1.3rem;line-height:1}
+.meter{height:10px;background:var(--blue-soft);border-radius:99px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--blue)}
+.desk small{color:var(--muted);font-size:.82rem;line-height:1.35}
+@media (max-width:520px){.desk{grid-template-columns:1fr}}
+
+/* neck chart */
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;overflow-x:auto}
+.chart svg{display:block;width:100%;height:auto;min-width:300px}
+.chart text{font-family:var(--mono);fill:var(--muted);font-size:13px}
+.chart .v{fill:var(--ink);font-weight:700}
+.chart .bar{fill:var(--blue)}
+.chart .bar.hot{fill:var(--alert)}
+.chart .grid{stroke:var(--line);stroke-width:1}
+
+/* slot machine */
+.slot{display:flex;gap:8px;margin-block:4px 4px}
+.reel{flex:1;background:var(--ink);color:var(--bg);border-radius:10px;height:84px;display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:1.35rem;text-transform:uppercase;text-align:center;line-height:1;padding:6px}
+.pull{font-family:var(--mono);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:.85rem;background:var(--alert);color:var(--alert-ink);border:0;border-radius:999px;padding:12px 20px;cursor:pointer;justify-self:start}
+.pull:hover{filter:brightness(1.08)}
+.loop{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-family:var(--mono);font-size:.82rem;text-transform:uppercase;letter-spacing:.05em}
+.loop span{background:var(--blue-soft);color:var(--ink);padding:6px 10px;border-radius:6px}
+.loop i{font-style:normal;color:var(--alert);font-weight:700}
+
+/* calculator */
+.calc{background:var(--ink);color:var(--bg);border-radius:22px;padding:28px;display:grid;gap:22px}
+.calc .label{color:var(--bg);opacity:.75}
+.calc-controls{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.calc-controls > *{min-width:0}
+.calc label{display:grid;gap:8px;font-weight:700}
+.calc output{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.calc input[type=range]{width:100%;accent-color:var(--alert)}
+.calc-result{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;border-top:1px solid color-mix(in srgb,var(--bg) 25%,transparent);padding-top:20px}
+.calc-result div{display:grid;gap:4px}
+.calc-result b{font-family:var(--display);font-weight:900;font-size:clamp(2.6rem,7vw,4.4rem);line-height:.9;font-variant-numeric:tabular-nums}
+.calc-result b.hot{color:var(--alert)}
+.calc-result span{font-size:.9rem;opacity:.8;line-height:1.35}
+@media (max-width:640px){.calc-controls,.calc-result{grid-template-columns:1fr}}
+
+/* quiz */
+.quiz{display:grid;gap:10px}
+.q{display:flex;gap:14px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;cursor:pointer}
+.q input{width:22px;height:22px;flex:none;margin-top:2px;accent-color:var(--alert)}
+.q:has(input:checked){border-color:var(--alert)}
+.score{position:sticky;top:80px;background:var(--surface);border:2px solid var(--ink);border-radius:14px;padding:22px;display:grid;gap:10px}
+.score b{font-family:var(--display);font-weight:900;font-size:4.5rem;line-height:.9;font-variant-numeric:tabular-nums}
+.score h3{font-size:2rem}
+.score small{color:var(--muted);font-size:.85rem;line-height:1.4}
+@media (max-width:860px){.score{position:static}}
+.score.urgent{background:var(--alert);color:var(--alert-ink);border-color:var(--alert)}
+.score.urgent .label,.score.urgent small{color:var(--alert-ink);opacity:.9}
+
+/* actions */
+.actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2px;background:var(--ink);border:2px solid var(--ink);border-radius:14px;overflow:hidden}
+@media (max-width:960px){.actions{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.actions{grid-template-columns:1fr}.action-cta{grid-column:auto}}
+.action-cta{grid-column:span 2;background:var(--ink);color:var(--bg);padding:22px;display:grid;gap:8px;align-content:start}
+.action-cta .label{color:var(--alert)}
+.action-cta h3{font-size:1.65rem}
+.action-cta p{font-size:.98rem;max-width:52ch}
+.action-cta .pull{text-decoration:none;justify-self:start;margin-top:4px}
+.action{background:var(--bg);padding:22px;display:grid;gap:8px;align-content:start}
+.action h3{font-size:1.65rem}
+.action .label{color:var(--blue)}
+.action p{font-size:.98rem}
+
+/* challenge */
+.challenge{background:var(--alert);color:var(--alert-ink)}
+.challenge .wrap{padding-block:64px;display:grid;gap:18px}
+.challenge h2{font-size:clamp(3rem,10vw,7rem)}
+.challenge p{font-size:1.2rem;max-width:58ch}
+.challenge .label{color:var(--alert-ink);opacity:.85}
+.challenge sup a{color:inherit}
+.challenge h2{line-height:.88}
+.ch-lede{font-size:clamp(1.25rem,2.4vw,1.6rem)!important;line-height:1.35;max-width:44ch!important;font-weight:700}
+.ch-proof{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--alert-ink);border-bottom:2px solid var(--alert-ink);margin-top:8px}
+.ch-proof div{padding-block:18px;padding-inline:0 16px;display:grid;gap:4px;align-content:start}
+.ch-proof div + div{border-left:1px solid color-mix(in srgb,var(--alert-ink) 45%,transparent);padding-left:16px}
+.ch-proof b{font-family:var(--display);font-weight:900;font-size:clamp(2.8rem,7vw,4.6rem);line-height:.9;font-variant-numeric:tabular-nums}
+.ch-proof span{font-size:.95rem;line-height:1.35}
+.ch-src{font-size:.85rem!important;opacity:.85}
+.ch-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:32px;margin-top:20px;align-items:start}
+.ch-rules{display:grid;gap:14px}
+.ch-rules h3{font-size:2.2rem}
+.ch-rules ul{margin:0;padding:0;list-style:none;display:grid;gap:12px}
+.ch-rules li{display:grid;grid-template-columns:28px 1fr;gap:10px;font-size:1.08rem;line-height:1.45}
+.ch-rules li::before{content:"";width:22px;height:22px;margin-top:2px;border:3px solid var(--alert-ink);border-radius:6px}
+.tracker{background:var(--bg);color:var(--ink);border-radius:20px;padding:26px;display:grid;gap:14px;box-shadow:0 18px 40px rgba(0,0,0,.22)}
+.tracker .label{color:var(--alert);opacity:1}
+.tracker h3{font-size:clamp(2.6rem,7vw,4rem)}
+.tracker p{font-size:1rem!important;max-width:none!important}
+.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+.day{aspect-ratio:1/1;max-width:100%;border:2px solid var(--ink);border-radius:8px;background:transparent;color:var(--ink);font-family:var(--mono);font-weight:700;font-size:.9rem;display:grid;place-items:center;cursor:pointer;padding:0}
+.day.ticked{background:var(--ink);color:var(--bg)}
+.day.today{outline:3px solid var(--alert);outline-offset:2px}
+.day:disabled{opacity:.3;cursor:default}
+.tracker .msg{font-weight:700;font-size:1.05rem!important}
+.tracker .fine{font-size:.8rem!important;color:var(--muted)}
+.ch-steps{margin:0;padding-left:1.3em;display:grid;gap:6px;font-size:1rem}
+.linkbtn{background:none;border:0;padding:0;font:inherit;font-size:.8rem;color:var(--muted);text-decoration:underline;cursor:pointer;justify-self:start}
+@media (max-width:860px){.ch-grid{grid-template-columns:1fr}}
+@media (max-width:560px){.ch-proof{grid-template-columns:1fr}.ch-proof div + div{border-left:0;padding-left:0;border-top:1px solid color-mix(in srgb,var(--alert-ink) 45%,transparent)}}
+
+/* sources */
+.sources{padding-block:56px 72px}
+.sources ol{margin:18px 0 0;padding-left:1.4em;display:grid;gap:8px;font-size:.92rem;color:var(--muted);max-width:90ch}
+.sources li a{word-break:break-word}
+.foot{font-size:.85rem;color:var(--muted);margin-top:28px;max-width:70ch}
+sup a{font-family:var(--mono);font-size:.7em;text-decoration:none;color:var(--blue);padding-left:1px}
+
+
+/* feed toy */
+.feed-wrap{display:grid;grid-template-columns:minmax(0,1fr) 340px minmax(0,1fr);gap:40px;align-items:center}
+.feed-side{display:grid;gap:12px;align-content:center}
+.feed-side h3{font-size:1.9rem}
+.feed-wrap > *{min-width:0}
+@media (max-width:960px){.feed-wrap{grid-template-columns:1fr;gap:28px}.feed-side{max-width:62ch}}
+.phone{position:relative;width:100%;max-width:340px;justify-self:center;border:10px solid var(--ink);border-radius:36px;background:var(--surface);overflow:hidden;height:560px;display:flex;flex-direction:column}
+.phone-top{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:.72rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.phone-top b{font-family:var(--display);font-weight:900;font-size:1.25rem;color:var(--ink);text-transform:uppercase}
+.feed{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:12px;display:grid;gap:16px;align-content:start}
+.post{display:grid;gap:6px}
+.post .who{font-family:var(--mono);font-size:.72rem;color:var(--muted);display:flex;justify-content:space-between;gap:8px}
+.post .tile{aspect-ratio:1/1;max-width:100%;border-radius:10px;display:grid;place-items:center;padding:18px;text-align:center;font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:1.7rem;line-height:1;color:#FFFFFF}
+.post .meta{font-size:.8rem;color:var(--muted);font-family:var(--mono)}
+.phone-over{position:absolute;inset:0;background:var(--ink);color:var(--bg);display:grid;align-content:center;gap:14px;padding:26px}
+.phone-over .label{color:var(--alert)}
+.phone-over h3{font-size:2.5rem}
+.phone-over p{font-size:.98rem;line-height:1.45}
+.phone-over input{width:100%;font:inherit;padding:10px 12px;border-radius:8px;border:2px solid var(--bg);background:transparent;color:var(--bg)}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+.ghost{font-family:var(--mono);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:.8rem;background:transparent;color:inherit;border:2px solid currentColor;border-radius:999px;padding:10px 16px;cursor:pointer}
+.limit{font-family:var(--mono);font-size:.78rem;color:var(--alert);font-weight:700;letter-spacing:.04em}
+
+/* fake notification */
+.notif{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 12px);transform:translate(-50%,-160%);transition:transform .35s ease;z-index:50;width:min(420px,calc(100% - 32px));background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:16px;box-shadow:0 12px 30px rgba(0,0,0,.28);display:flex;gap:12px;align-items:center;padding:12px 14px;cursor:pointer;text-align:left;font:inherit}
+.notif.show{transform:translate(-50%,0)}
+.notif .ic{width:40px;height:40px;border-radius:10px;background:var(--alert);flex:none;display:grid;place-items:center}
+.notif .ic i{width:12px;height:12px;border-radius:50%;background:var(--alert-ink)}
+.notif small{display:block;color:var(--muted);font-size:.72rem;font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em}
+.notif strong{display:block;font-size:.98rem;line-height:1.3}
+.overlay{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:calc(24px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:color-mix(in srgb,var(--ink) 85%,transparent)}
+.overlay-card{background:var(--alert);color:var(--alert-ink);border-radius:20px;padding:28px;max-width:480px;width:100%;display:grid;gap:14px}
+.overlay-card .label{color:var(--alert-ink);opacity:.85}
+.overlay-card h3{font-size:clamp(2.4rem,8vw,3.4rem)}
+.overlay-card p{line-height:1.5}
+
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 20px);transform:translateX(-50%);z-index:55;background:var(--ink);color:var(--bg);font-weight:700;padding:12px 18px;border-radius:999px;box-shadow:0 10px 24px rgba(0,0,0,.25);width:max-content;max-width:calc(100% - 32px);text-align:center}
+
+/* exit */
+.exit{background:var(--ink);color:var(--bg)}
+.exit .wrap{padding-block:80px;display:grid;gap:20px}
+.exit .label{color:var(--bg);opacity:.7}
+.exit h2{font-size:clamp(3rem,10vw,7rem)}
+.feed-end{display:flex;align-items:center;gap:14px;font-family:var(--mono);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--bg);opacity:.75}
+.feed-end i{flex:1;height:1px;background:currentColor}
+.feed-end span{display:flex;align-items:center;gap:8px}
+.feed-end span::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--alert)}
+.exit h2 span{color:var(--alert);font-family:var(--display);font-variant-numeric:tabular-nums}
+.exit p{font-size:1.2rem;max-width:52ch}
+.pull.big{font-size:1rem;padding:16px 26px}
+.done-screen{position:fixed;inset:0;z-index:70;background:var(--ink);color:var(--bg);display:grid;align-content:center;gap:18px;padding:calc(24px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.done-screen > *{max-width:1120px;width:100%;margin:0 auto}
+.done-screen h2{font-size:clamp(5rem,19vw,14rem)}
+.done-screen p{font-size:1.25rem;max-width:44ch}
+a.ghost{display:inline-block;text-decoration:none}
+.done-screen .ghost{justify-self:start;margin:0}
+@media (max-width:560px){.actions .action-cta{grid-column:auto}}
+.phone{height:min(560px,72vh)}
+.feed-start{position:absolute;left:0;right:0;top:46px;bottom:0;z-index:2;border:0;background:color-mix(in srgb,var(--ink) 55%,transparent);color:var(--bg);font-family:var(--mono);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:.85rem;cursor:pointer;display:grid;place-items:center}
+.feed-start span{background:var(--alert);color:var(--alert-ink);padding:14px 20px;border-radius:999px}
+.swipe-hint{display:none}
+@media (max-width:960px){.phones{grid-auto-columns:128px}.swipe-hint{display:block}}
+@media (prefers-reduced-motion:reduce){.badge.pop{animation:none}*{scroll-behavior:auto}.notif{transition:none}}
+html{scroll-behavior:smooth}
+</style>
+</head>
+<body>
+
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="logo" href="#top"><span class="dot"></span>End of Feed</a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#brain">Brain</a><a href="#body">Body</a><a href="#hook">Psychology</a><a href="#feed">The feed</a><a href="#people">Relationships</a><a href="#world">Global</a><a href="#life">Your life</a><a href="#check">Self-check</a><a href="#help">What helps</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <span class="label">A campaign about phone addiction</span>
+      <h1>End of <span class="up">feed<button class="badge" id="badge" type="button" aria-label="Unread notifications" style="visibility:hidden"></button></span></h1>
+      <div class="hero-grid">
+        <p class="lede">Your feed was designed to never end. This is where it does. What endless scrolling is doing to your brain, your body, your relationships and your time, and what the evidence says you can do about it.</p>
+        <div class="lock" role="status" aria-live="off">
+          <span class="label">You've been on this page</span>
+          <span class="clock" id="clock">0:00</span>
+          <p>In a survey of Irish adults, 15% said they check their phone <strong>more than 100 times a day</strong>.<sup><a href="#s1" style="color:inherit">1</a></sup> That's once every ten waking minutes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="wrap">
+      <div class="stat"><b>70%</b><span>of Irish adults feel they use their phone too much<sup><a href="#s1">1</a></sup></span></div>
+      <div class="stat"><b>60%</b><span>look at it within 15 minutes of waking<sup><a href="#s1">1</a></sup></span></div>
+      <div class="stat"><b>54%</b><span>stay up later than planned because of it<sup><a href="#s1">1</a></sup></span></div>
+      <div class="stat"><b>15%</b><span>check it more than 100 times a day<sup><a href="#s1">1</a></sup></span></div>
+    </div>
+    <div class="wrap"><span class="label strip-cap">Ireland. Deloitte survey of 1,000 adults, late 2025</span></div>
+  </div>
+
+  <!-- BRAIN -->
+  <section class="chapter" id="brain">
+    <div class="wrap">
+      <div class="chapter-head brain-head">
+        <div class="brain-text">
+          <span class="label">What it's doing to your brain</span>
+          <h2>It drains you <em>even when it's off</em></h2>
+          <p class="prose">Attention is limited. Your phone keeps taking a slice of it, whether you pick it up or not.</p>
+        </div>
+        <div class="battery-box">
+          <span class="label">Your brainpower</span>
+          <div class="battery" role="img" aria-label="A battery representing your brainpower, draining while the phone is nearby"><div class="cells"><i id="batFill"></i></div><span class="nub"></span></div>
+          <div class="bat-read"><b id="batPct">100%</b><span id="batNote" aria-live="polite">Phone face-down on the desk. Silent. Still draining.</span></div>
+          <div class="bat-ctl" role="group" aria-label="Where is your phone?">
+            <button class="chip on" type="button" data-t="55" aria-pressed="true">On the desk</button><button class="chip" type="button" data-t="72" aria-pressed="false">In your pocket</button><button class="chip" type="button" data-t="92" aria-pressed="false">Another room</button>
+          </div>
+          <small class="label">Illustration of the Texas study below. Move the phone and watch</small>
+        </div>
+      </div>
+      <div class="split">
+        <div class="point">
+          <h3>The "brain drain" experiment</h3>
+          <p>Researchers at the University of Texas gave nearly 800 people tests that need full concentration. Some left their phone face-down on the desk, some kept it in a pocket or bag, and some left it in another room. Phones were silenced. The closer and more visible the phone, the lower people scored on working memory and problem-solving, even though they felt fully focused.<sup><a href="#s3">3</a></sup></p>
+          <p>Whether the phone was on or off made no difference. Part of the brain was busy not picking it up. The people who felt most dependent on their phones lost the most.<sup><a href="#s3">3</a></sup></p>
+          <p style="font-weight:700;margin-top:6px">The results: where was the phone during the test?</p>
+          <div class="desk" aria-label="Test results by where the phone was: on the desk worst, in a pocket or bag in between, in another room best.">
+            <div><span class="where">On the desk</span><span class="meter"><i style="width:55%"></i></span><small><strong>Worst results.</strong> Even face-down and silent.</small></div>
+            <div><span class="where">Pocket or bag</span><span class="meter"><i style="width:72%"></i></span><small><strong>Better.</strong> Out of sight, but still close.</small></div>
+            <div><span class="where">Another room</span><span class="meter"><i style="width:92%"></i></span><small><strong>Best results.</strong> Out of reach and out of mind.</small></div>
+          </div>
+          <small class="label">Bar = brainpower left for the test. Shows the order of results, not exact scores</small>
+        </div>
+        <div class="cols" style="grid-template-columns:1fr">
+          <div class="point">
+            <h3>47 seconds</h3>
+            <p>UC Irvine researcher Gloria Mark has tracked how long people stay on one screen before switching. In 2004 it was about two and a half minutes. In her recent data it's about 47 seconds.<sup><a href="#s4">4</a></sup></p>
+          </div>
+          <div class="point">
+            <h3>~25 minutes</h3>
+            <p>When an interruption pulls you away from a task, it takes on average over 20 minutes to get back to it, usually after drifting through other tasks first.<sup><a href="#s4">4</a></sup> Every buzz has a cost far longer than the glance.</p>
+          </div>
+          <div class="note">
+            <span class="label">The good news</span>
+            <p>In a 2025 study, people who blocked mobile internet on their phones for two weeks improved on an attention test by about as much as reversing 10 years of age-related decline.<sup><a href="#s5">5</a></sup> The damage is not fixed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BODY -->
+  <section class="chapter" id="body">
+    <div class="wrap">
+      <div class="chapter-head brain-head">
+        <div class="brain-text">
+          <span class="label">Health effects</span>
+          <h2>Your body <em>keeps the score</em></h2>
+          <p class="prose">Sleep, mood and your spine all register the hours. The research on cause and effect is still developing, but the patterns are consistent.</p>
+        </div>
+        <div class="conn-box neck-box" id="neckBox">
+          <span class="label">Weight on your neck</span>
+          <div class="neck-row">
+            <svg class="neck-svg" viewBox="0 0 200 220" role="img" aria-label="A person holding a phone. As the phone drops and the head tilts forward, the weight on the neck rises from 5 kg to 27 kg. Raising the phone to eye level brings it back to 5 kg.">
+              <line x1="96" y1="112" x2="96" y2="26" class="neck-ref"/>
+              <path id="neckArc" class="neck-arc" d=""/>
+              <line id="neckSight" class="neck-sight" x1="0" y1="0" x2="0" y2="0"/>
+              <g id="neckHead">
+                <rect x="89" y="88" width="14" height="32" rx="7" class="neck-body"/>
+                <circle cx="97" cy="80" r="20" class="neck-body"/>
+                <circle cx="109" cy="76" r="2.6" class="neck-eye"/>
+              </g>
+              <path d="M76 214 L80 126 Q82 109 96 108 Q111 109 113 126 L117 214 Z" class="neck-body"/>
+              <path id="neckArm" class="neck-arm" d=""/>
+              <g id="neckPhone">
+                <rect x="-3" y="-27" width="7" height="30" rx="2" class="neck-slab"/>
+                <rect x="-5" y="-25" width="2.4" height="26" rx="1" class="neck-screen"/>
+              </g>
+              <circle id="neckHand" r="6" class="neck-body"/>
+            </svg>
+            <div class="neck-read">
+              <b id="neckKg">5 kg</b>
+              <span class="label" id="neckDeg">Head tilt: 0°</span>
+            </div>
+          </div>
+          <p class="conn-note" id="neckNote" aria-live="polite">Head upright. About 5 kg on your neck.</p>
+          <small class="label">Illustration of Hansraj's calculations below</small>
+        </div>
+      </div>
+      <div class="body-cols">
+        <div class="point">
+          <h3>Text neck</h3>
+          <p>An adult head weighs about 5 kg. Tilt it forward to look at a phone and the load on your neck climbs fast. Spine surgeon Kenneth Hansraj calculated the force at each angle. At a typical texting posture of 60°, it's about 27 kg, roughly the weight of an eight-year-old child.<sup><a href="#s6">6</a></sup></p>
+          <p>Hansraj estimated this adds up to 700 to 1,400 hours a year of extra stress on the neck. His fix is simple: lift the phone and move your eyes down, not your head.<sup><a href="#s6">6</a></sup></p>
+        </div>
+          <div class="point">
+            <h3>Sleep</h3>
+            <p>A four-month study using sleep-tracking rings found that phone use <em>in bed</em> meant taking longer to fall asleep, more time awake in the night, a higher heart rate and lower heart-rate variability.<sup><a href="#s7">7</a></sup></p>
+            <p>Night mode is not the fix. In a BYU study, people using Night Shift slept no better than people using their phone normally. Only putting the phone away for the last hour helped, and only for those already getting about seven hours.<sup><a href="#s8">8</a></sup> The problem is the scrolling, not just the light.</p>
+          </div>
+          <div class="point">
+            <h3>Mood</h3>
+            <p>Across studies, problematic phone use is consistently linked with depression, with medium-sized effects, and with anxiety, with smaller ones.<sup><a href="#s9">9</a></sup> A review of studies on young people found roughly 10 to 30% met a threshold for problematic use, which was associated with more depression, anxiety, stress and poor sleep.<sup><a href="#s10">10</a></sup></p>
+          </div>
+      </div>
+          <div class="note body-note">
+            <span class="label">Straight talk</span>
+            <p>Most of this research shows a link, not proof that phones cause the harm. Low mood can drive more scrolling too. The strongest evidence that cutting back helps comes from experiments like the two-week block further down.</p>
+          </div>
+    </div>
+  </section>
+
+  <!-- PSYCHOLOGY -->
+  <section class="chapter" id="hook">
+    <div class="wrap">
+      <div class="chapter-head brain-head">
+        <div class="brain-text">
+          <span class="label">The psychology</span>
+          <h2>A slot machine <em>in your pocket</em></h2>
+          <p class="prose">It isn't weak willpower. You're up against features built by some of the best-paid designers in the world, using one of the oldest tricks in psychology.</p>
+        </div>
+        <div class="conn-box slot-box">
+          <span class="label">Your feed, as a slot machine</span>
+          <div class="sm" id="slotMachine">
+            <div class="sm-body">
+              <div class="sm-marquee"><span class="sm-lights" aria-hidden="true"></span><b>REFRESH</b><span class="sm-lights" aria-hidden="true"></span></div>
+              <div class="sm-window" aria-live="polite" aria-label="Reels">
+                <div class="sm-reel"><div class="sm-strip" id="strip1"><span>Like</span></div></div>
+                <div class="sm-reel"><div class="sm-strip" id="strip2"><span>Rage bait</span></div></div>
+                <div class="sm-reel"><div class="sm-strip" id="strip3"><span>Message</span></div></div>
+                <i class="sm-payline" aria-hidden="true"></i>
+              </div>
+              <div class="sm-tray" aria-hidden="true"></div>
+            </div>
+            <button class="sm-lever" id="pull" type="button" aria-label="Pull the lever"><span class="sm-rod"></span><span class="sm-knob"></span></button>
+          </div>
+          <p class="conn-note" id="pulls" aria-live="polite">Tap the lever. Most pulls bring junk, like a real feed.</p>
+          <small class="label">Every time you refresh a feed, you pull this lever</small>
+        </div>
+      </div>
+      <div class="psy-cols">
+        <div class="point">
+          <h3>Unpredictable rewards</h3>
+          <p>In the 1950s, B.F. Skinner found that animals pressed a lever hardest when food arrived unpredictably. A reward that <em>might</em> come is more compelling than one that always does. Behaviour trained this way is also the hardest to stop.<sup><a href="#s11">11</a></sup></p>
+          <p>Your feed works the same way. Refresh, and maybe there's something good. Former Google design ethicist Tristan Harris told the US Senate that refreshing a feed works like pulling a slot machine lever.<sup><a href="#s12">12</a></sup></p>
+        </div>
+        <div class="point">
+          <h3>Dopamine is about wanting</h3>
+          <p>Dopamine is less a pleasure chemical than an anticipation chemical. It spikes in the moment before the reward, when you don't yet know what you'll get.<sup><a href="#s12">12</a></sup> That's why checking feels urgent and the result often feels flat.</p>
+        </div>
+        <div class="point">
+          <h3>The loop</h3>
+          <div class="loop"><span>Buzz or boredom</span><i>→</i><span>Check</span><i>→</i><span>Maybe a reward</span><i>→</i><span>Habit gets stronger</span><i>↺</i></div>
+          <p>Researchers at Nottingham Trent found people checked their phones twice as often as they thought, mostly in bursts under 30 seconds.<sup><a href="#s13">13</a></sup> Much of it happens on autopilot.</p>
+        </div>
+        <div class="point">
+          <h3>Other hooks</h3>
+          <p>Red badges that nag until cleared. Feeds with no bottom. Likes that arrive on their own schedule. Autoplay. Streaks you don't want to break. Each one removes a natural stopping point.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEED -->
+  <section class="chapter" id="feed">
+    <div class="wrap">
+      <div class="chapter-head">
+        <span class="label">Try it yourself</span>
+        <h2>Go on, <em>scroll</em></h2>
+        <p class="prose">Here's a feed with nothing in it worth seeing and no bottom. Scroll it the way you'd scroll your phone.</p>
+      </div>
+      <div class="feed-wrap">
+        <div class="feed-side">
+          <h3>No place to stop</h3>
+          <p>Real feeds are built the same way: short posts, no end, and the next thing already loaded before you've decided whether to stop.</p>
+          <p>There's no natural moment to put it down, so most people only stop when something interrupts them.</p>
+        </div>
+        <div class="phone">
+          <div class="phone-top"><b>Feed</b><span id="feedStat">0 posts · 0:00</span></div>
+          <div class="feed" id="feedList" tabindex="0" aria-label="Endless example feed. Scroll to use it."></div>
+          <button class="feed-start" id="feedStart" type="button"><span>Tap to start scrolling</span></button>
+          <div class="phone-over" id="feedOver" role="dialog" aria-live="polite" hidden></div>
+        </div>
+        <div class="feed-side" id="feedSideBefore">
+          <h3>Notice the pull</h3>
+          <p>Feeds are tuned so the next post always looks a little more interesting than the last one. Watch for the moment you think "just one more".</p>
+          <p>That moment is the habit. Most people never notice it. Keep an eye on the counter at the top of the phone while you scroll.</p>
+        </div>
+        <div class="feed-side" id="feedSideAfter" hidden>
+          <h3>This one stopped you</h3>
+          <p>Real apps mostly won't. They're built so there's never a natural moment to put them down.</p>
+          <p>This feed also has a daily limit, like the screen-time limits your phone can set for real apps. Once it's used up, the feed locks until tomorrow.</p>
+          <p class="limit" id="feedLimitNote">Daily limit on this feed: 2 minutes</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RELATIONSHIPS -->
+  <section class="chapter" id="people">
+    <div class="wrap">
+      <div class="chapter-head brain-head">
+        <div class="brain-text">
+          <span class="label">Your relationships</span>
+          <h2>The person <em>across the table</em></h2>
+          <p class="prose">There's a word for ignoring someone in front of you to look at your phone: phubbing.</p>
+        </div>
+        <div class="conn-box" id="connBox">
+          <span class="label">Connection</span>
+          <svg class="conn-svg" viewBox="0 0 420 200" role="img" aria-label="Two people at a table. Each time the phone between them lights up and one looks down, the connection signal between them drops a bar.">
+            <line id="connGaze" x1="98" y1="92" x2="322" y2="92" class="conn-gaze"/>
+            <g class="conn-bars">
+              <rect id="cb1" x="184" y="40" width="9" height="10" rx="2"/>
+              <rect id="cb2" x="197" y="32" width="9" height="18" rx="2"/>
+              <rect id="cb3" x="210" y="24" width="9" height="26" rx="2"/>
+              <rect id="cb4" x="223" y="16" width="9" height="34" rx="2"/>
+            </g>
+            <rect x="40" y="122" width="72" height="52" rx="30" class="conn-body"/>
+            <circle cx="76" cy="92" r="22" class="conn-head"/>
+            <circle cx="88" cy="88" r="3" class="conn-eye"/>
+            <rect x="308" y="122" width="72" height="52" rx="30" class="conn-body"/>
+            <g id="connRight" class="conn-right">
+              <circle cx="344" cy="92" r="22" class="conn-head"/>
+              <circle cx="332" cy="88" r="3" class="conn-eye"/>
+            </g>
+            <circle id="connGlow" cx="298" cy="164" r="20" class="conn-glow"/>
+            <rect id="connPhone" x="284" y="161" width="28" height="7" rx="2" class="conn-phone"/>
+            <rect x="30" y="168" width="360" height="8" rx="3" class="conn-table"/>
+          </svg>
+          <p class="conn-note" id="connNote" aria-live="polite">Full attention. Eye contact.</p>
+          <small class="label">Illustration of the Baylor phubbing research below</small>
+        </div>
+      </div>
+      <div class="cols">
+        <div class="point">
+          <h3>46% phubbed</h3>
+          <p>In Baylor University research, 46% of adults said their partner had phubbed them, and 22% said it had caused conflict.<sup><a href="#s14">14</a></sup></p>
+        </div>
+        <div class="point">
+          <h3>A chain reaction</h3>
+          <p>The researchers traced a path: feeling phubbed led to conflict, then lower relationship satisfaction, then lower life satisfaction and higher depression.<sup><a href="#s14">14</a></sup> Later studies found phubbing leaves people feeling deprived of affection, which also lowers satisfaction.<sup><a href="#s15">15</a></sup></p>
+        </div>
+        <div class="point">
+          <h3>Just having it out</h3>
+          <p>People in the study counted keeping a phone in sight or in hand during a conversation as snubbing.<sup><a href="#s14">14</a></sup> The phone on the table at dinner says something even when it's silent.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORLD -->
+  <section class="chapter" id="world">
+    <div class="wrap">
+      <div class="chapter-head">
+        <span class="label">Around the world</span>
+        <h2>The same <em>everywhere</em></h2>
+        <p class="prose">Phone overuse shows up wherever smartphones go. Here's what it looks like in different parts of the world.</p>
+      </div>
+      <div class="clock-strip" id="clockStrip">
+        <h3 class="strip-lede">Right now, in every time zone, someone is reaching for their phone</h3>
+        <div class="phones" id="phones" aria-label="Phone lock screens in eight cities showing their local time and incoming notifications"></div>
+        <p class="label swipe-hint">Swipe for more cities →</p>
+        <p class="label" id="pingCount" aria-live="off">Notifications landed while you've been watching: 0</p>
+      </div>
+      <div class="world">
+        <div class="place"><span class="where">Ireland</span><b>82%</b><p>of Irish adults back limits on social media use for under-18s. Most of us already know something is wrong.<sup><a href="#s1">1</a></sup></p></div>
+        <div class="place"><span class="where">Europe</span><b>7% → 11%</b><p>Problematic social media use among European teenagers rose between 2018 and 2022, according to the World Health Organization. Girls were hit hardest.<sup><a href="#s2">2</a></sup></p></div>
+        <div class="place hot"><span class="where">South Korea</span><b>43%</b><p>of Korean adolescents are in the government's at-risk group for smartphone overdependence, up on the year before. Officials point to short-form video. Across all ages it's 22.7%.<sup><a href="#s16">16</a></sup></p></div>
+        <div class="place"><span class="where">Worldwide</span><b>Rising</b><p>A study pooling data from 24 countries found problematic smartphone use increasing worldwide. Rates were highest in China and Saudi Arabia and lowest in Germany and France.<sup><a href="#s17">17</a></sup></p></div>
+      </div>
+      <div class="note" style="margin-top:24px">
+        <span class="label">Different apps, same hooks</span>
+        <p>WhatsApp and Instagram across Europe and the Americas. LINE in Thailand and Japan. WeChat and Douyin in China. KakaoTalk in Korea. The names change from country to country, but the slot-machine design underneath is the same, and so is what it does to the brain.</p>
+        <div class="apps"><span>WhatsApp</span><span>Instagram</span><span>TikTok</span><span>LINE</span><span>WeChat</span><span>Douyin</span><span>KakaoTalk</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIFE -->
+  <section class="chapter" id="life">
+    <div class="wrap">
+      <div class="chapter-head">
+        <span class="label">Your life</span>
+        <h2>Do <em>the maths</em></h2>
+        <p class="prose">Check your phone's screen time setting, then put in your real numbers. Assumes 16 waking hours a day and a life to age 80.</p>
+      </div>
+      <form class="calc" id="calc" onsubmit="return false">
+        <div class="calc-controls">
+          <label for="hours">Hours on your phone per day <output id="hoursOut" for="hours">4.5</output>
+            <input type="range" id="hours" min="0.5" max="12" step="0.5" value="4.5">
+          </label>
+          <label for="age">Your age <output id="ageOut" for="age">35</output>
+            <input type="range" id="age" min="10" max="79" step="1" value="35">
+          </label>
+        </div>
+        <div class="calc-result">
+          <div><span class="label">Each year</span><b id="days">68</b><span>full 24-hour days on your phone</span></div>
+          <div><span class="label">Rest of your life</span><b class="hot" id="years">8.4</b><span>years, non-stop, on screen</span></div>
+          <div><span class="label">Of your waking time</span><b id="pct">28%</b><span>spent looking at the phone</span></div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- SELF CHECK -->
+  <section class="chapter" id="check">
+    <div class="wrap">
+      <div class="chapter-head">
+        <span class="label">Self-check</span>
+        <h2>Is it <em>you</em>?</h2>
+        <p class="prose">Tick what's true for you. Researchers judge problematic use by the same signs used for other habits: loss of control, cravings, feeling bad without it, and carrying on despite harm.</p>
+      </div>
+      <div class="split">
+        <div class="quiz" id="quiz">
+          <label class="q"><input type="checkbox" id="q1"><span>I reach for my phone without deciding to.</span></label>
+          <label class="q"><input type="checkbox" id="q2"><span>It's the first thing I look at when I wake up.</span></label>
+          <label class="q"><input type="checkbox" id="q3"><span>I use it in bed and stay up later than I meant to.</span></label>
+          <label class="q"><input type="checkbox" id="q4"><span>I feel anxious when the battery is low or I've left it behind.</span></label>
+          <label class="q"><input type="checkbox" id="q5"><span>Someone close to me has complained about my phone use.</span></label>
+          <label class="q"><input type="checkbox" id="q6"><span>I've tried to cut back and gone back to the same habits.</span></label>
+          <label class="q"><input type="checkbox" id="q7"><span>I check it during conversations, meals or films.</span></label>
+          <label class="q"><input type="checkbox" id="q8"><span>I look at it while driving, even at lights.</span></label>
+        </div>
+        <aside class="score" aria-live="polite">
+          <span class="label">Your score</span>
+          <b id="score">0/8</b>
+          <h3 id="verdict">Start ticking</h3>
+          <p id="advice">Be honest. Nobody else sees this.</p>
+          <small>This is a prompt for reflection, not a diagnosis. If your phone use is tied up with low mood or anxiety, talk to your GP.</small>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT HELPS -->
+  <section class="chapter" id="help">
+    <div class="wrap">
+      <div class="chapter-head">
+        <span class="label">What helps</span>
+        <h2>Take <em>it back</em></h2>
+        <p class="prose">You don't need to throw the phone in the sea. Change what's around it, so the easy choice is the good one. Flip a switch to see how.</p>
+      </div>
+      <div class="help-grid">
+        <div class="settings" id="settings">
+          <div class="set-head"><span class="set-title">Settings</span><span class="set-count" id="setCount" aria-live="polite">0 of 6 switched on</span></div>
+          <div class="set-row">
+            <button class="set-btn" type="button" role="switch" aria-checked="false" aria-controls="setd1" id="setb1">
+              <span class="set-ic" style="background:#2340F5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10v18H7z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="14" cy="12" r="1.3" fill="currentColor"/></svg></span>
+              <span class="set-txt"><small>Distance</small><strong>Phone in another room</strong></span>
+              <span class="switch" aria-hidden="true"><i></i></span>
+            </button>
+            <div class="set-detail" id="setd1" hidden><p>Out of sight is the only setting that fully removed the brain-drain effect in the Texas study.<sup><a href="#s3">3</a></sup></p><p><b>How:</b> Pick one room the phone lives in during focused work, meals and family time.</p></div>
+          </div>
+          <div class="set-row">
+            <button class="set-btn" type="button" role="switch" aria-checked="false" aria-controls="setd2" id="setb2">
+              <span class="set-ic" style="background:#5B3FD1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 3.5a8 8 0 1 0 5 13.6A7 7 0 0 1 15.5 3.5z" fill="currentColor"/></svg></span>
+              <span class="set-txt"><small>Sleep</small><strong>Phone out of the bedroom</strong></span>
+              <span class="switch" aria-hidden="true"><i></i></span>
+            </button>
+            <div class="set-detail" id="setd2" hidden><p>Phone use in bed is what hurt sleep in the ring-tracking study.<sup><a href="#s7">7</a></sup></p><p><b>How:</b> Buy a cheap alarm clock and charge the phone in another room overnight.</p></div>
+          </div>
+          <div class="set-row">
+            <button class="set-btn" type="button" role="switch" aria-checked="false" aria-controls="setd3" id="setb3">
+              <span class="set-ic" style="background:#F0312B"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 4l16 16" stroke="currentColor" stroke-width="2"/></svg></span>
+              <span class="set-txt"><small>Triggers</small><strong>Notifications off</strong></span>
+              <span class="switch" aria-hidden="true"><i></i></span>
+            </button>
+            <div class="set-detail" id="setd3" hidden><p>No buzz, no cue to check.</p><p><b>How:</b> In your phone's notification settings, switch off every app that isn't a real person you'd want to hear from.</p></div>
+          </div>
+          <div class="set-row">
+            <button class="set-btn" type="button" role="switch" aria-checked="false" aria-controls="setd4" id="setb4">
+              <span class="set-ic" style="background:#D98A00"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="1.5" fill="currentColor"/><rect x="14" y="4" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="4" y="14" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="14" y="14" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>
+              <span class="set-txt"><small>Friction</small><strong>Social apps off the home screen</strong></span>
+              <span class="switch" aria-hidden="true"><i></i></span>
+            </button>
+            <div class="set-detail" id="setd4" hidden><p>A few extra taps are enough to break the autopilot.</p><p><b>How:</b> Move them into a folder on the last screen, or delete the app and use the browser instead.</p></div>
+          </div>
+          <div class="set-row">
+            <button class="set-btn" type="button" role="switch" aria-checked="false" aria-controls="setd5" id="setb5">
+              <span class="set-ic" style="background:#1F9D55"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="9" r="3" fill="currentColor"/><circle cx="16" cy="9" r="3" fill="currentColor"/><path d="M3 19c1-3 3-4.5 5-4.5s4 1.5 5 4.5M11 19c1-3 3-4.5 5-4.5s4 1.5 5 4.5" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>
+              <span class="set-txt"><small>People</small><strong>Phones down at the table</strong></span>
+              <span class="switch" aria-hidden="true"><i></i></span>
+            </button>
+            <div class="set-detail" id="setd5" hidden><p>The phone on the table says something even when it's silent.<sup><a href="#s14">14</a></sup></p><p><b>How:</b> Agree on phone-free meals with the people you live with. Stack the phones in another room.</p></div>
+          </div>
+          <div class="set-row">
+            <button class="set-btn" type="button" role="switch" aria-checked="false" aria-controls="setd6" id="setb6">
+              <span class="set-ic" style="background:#4A5A9C"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V5M6 11l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="set-txt"><small>Posture</small><strong>Eyes down, not head</strong></span>
+              <span class="switch" aria-hidden="true"><i></i></span>
+            </button>
+            <div class="set-detail" id="setd6" hidden><p>At a 60° tilt your neck carries about 27 kg.<sup><a href="#s6">6</a></sup></p><p><b>How:</b> Hold the phone up near eye level. Ears over shoulders, shoulders back.</p></div>
+          </div>
+        </div>
+        <div class="action-cta help-cta">
+          <span class="label">Start today</span>
+          <h3 id="helpCtaH">Pick one. Do it tonight.</h3>
+          <p id="helpCtaP">You don't need all six. Switch on the one that would make the biggest difference to you, then actually do it before bed.</p>
+          <p>Ready to go further? Try two weeks without mobile internet.</p>
+          <a class="pull" href="#challenge">Take the 14-day challenge</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="challenge" id="challenge">
+    <div class="wrap">
+      <span class="label">The 14-day challenge</span>
+      <h2>Two weeks.<br>Calls and texts only.</h2>
+      <p class="ch-lede">No feeds. No scrolling. No browsing on the go. Your phone goes back to being a phone, and you get fourteen days to find out what you do with the time.</p>
+      <div class="ch-proof">
+        <div><b>91%</b><span>improved on at least one measure of wellbeing, mental health or attention</span></div>
+        <div><b>71%</b><span>reported better mental health after two weeks</span></div>
+        <div><b>2½h</b><span>a day of screen time won back, on average</span></div>
+      </div>
+      <p class="ch-src">From a 2025 study of 467 people who blocked mobile internet on their phones for two weeks, published in PNAS Nexus. They spent the time with people face to face, exercising and outdoors.<sup><a href="#s5">5</a></sup></p>
+      <div class="ch-grid">
+        <div class="ch-rules">
+          <h3>The rules</h3>
+          <ul>
+            <li><span>Turn off mobile data and Wi-Fi on your phone, or use a blocking app like Freedom to do it for you.</span></li>
+            <li><span>Calls and texts stay on. You can still be reached.</span></li>
+            <li><span>Need the internet? Use a laptop or computer, sitting down, on purpose.</span></li>
+            <li><span>Tell someone you're doing it, so they know why you've gone quiet.</span></li>
+            <li><span>Track it on paper, not on a screen. Tick one box every night.</span></li>
+            <li><span>Slip up? Don't start over. Pick it back up and keep going.</span></li>
+          </ul>
+        </div>
+        <div class="tracker" id="tracker" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="exit" id="exit">
+    <div class="wrap">
+      <div class="feed-end" aria-hidden="true"><i></i><span>End of feed</span><i></i></div>
+      <span class="label">You've reached the end</span>
+      <h2>You've been here <span id="exitTime">0:00</span></h2>
+      <p>No more posts. No next video. Nothing new loading. That's how a feed should end. Now the best thing this website can do is let you go.</p>
+      <button class="pull big" id="leave" type="button">Close this tab and look up</button>
+    </div>
+  </section>
+
+  <section class="sources" id="sources">
+    <div class="wrap">
+      <span class="label">Sources</span>
+      <ol>
+        <li id="s1">Deloitte Ireland, Digital Consumer Trends survey of 1,000 adults aged 18–75, November–December 2025 (published February 2026). <a href="https://www.deloitte.com/ie/en/about/press-room/ireland-sets-screen-time-limits.html" target="_blank" rel="noopener">deloitte.com</a></li>
+        <li id="s2">World Health Organization Europe, HBSC report on adolescent social media use and gaming (2024). <a href="https://jch.kun.uz/en/news/2024/09/26/who-report-highlights-rising-concerns-over-problematic-social-media-use-among-adolescents" target="_blank" rel="noopener">Report summary</a></li>
+        <li id="s3">Ward, Duke, Gneezy &amp; Bos (2017). Brain Drain: The Mere Presence of One's Own Smartphone Reduces Available Cognitive Capacity. J. Assoc. Consumer Research. <a href="https://news.utexas.edu/2017/06/26/the-mere-presence-of-your-smartphone-reduces-brain-power" target="_blank" rel="noopener">UT Austin summary</a></li>
+        <li id="s4">Gloria Mark, UC Irvine; <em>Attention Span</em> (2023) and CHI papers. <a href="https://www.thisandthat.chat/blog/fragmented-attention-statistics/" target="_blank" rel="noopener">Summary of figures and caveats</a></li>
+        <li id="s5">Castelo, Ward et al. (2025). Blocking mobile internet on smartphones improves sustained attention, mental health, and subjective well-being. PNAS Nexus 4(2). <a href="https://www.kpbs.org/news/health/2025/02/24/a-break-from-your-smartphone-can-reboot-your-mood-heres-how-long-you-need" target="_blank" rel="noopener">NPR report</a></li>
+        <li id="s6">Hansraj (2014). Assessment of stresses in the cervical spine caused by posture and position of the head. Surgical Technology International. <a href="https://www.npr.org/sections/thetwo-way/2014/11/20/365473750/keep-your-head-up-text-neck-can-take-a-toll-on-the-spine" target="_blank" rel="noopener">NPR</a>, <a href="https://www.sciencealert.com/new-study-reveals-what-checking-your-phone-is-doing-to-your-neck" target="_blank" rel="noopener">ScienceAlert</a></li>
+        <li id="s7">"Leave your smartphone out of bed": quantitative analysis of smartphone use effect on sleep quality (2022). <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9643910/" target="_blank" rel="noopener">PMC</a></li>
+        <li id="s8">Duraccio et al., BYU study on Night Shift and sleep. <a href="https://www.managedhealthcareexecutive.com/view/-night-shift-feature-on-iphone-does-not-help-sleep-quality-say-researchers" target="_blank" rel="noopener">Managed Healthcare Executive</a></li>
+        <li id="s9">Elhai et al. (2017). Problematic smartphone use: systematic review of relations with anxiety and depression. J. Affective Disorders. <a href="https://pubmed.ncbi.nlm.nih.gov/27736736/" target="_blank" rel="noopener">PubMed</a></li>
+        <li id="s10">Sohn et al. (2019). Prevalence of problematic smartphone usage and associated mental health outcomes amongst children and young people. BMC Psychiatry. <a href="https://www.sciencemediacentre.org/expert-reaction-to-problematic-smart-phone-use-in-young-people/" target="_blank" rel="noopener">Expert reaction</a></li>
+        <li id="s11">Variable reward schedules and operant conditioning. <a href="https://sites.harvard.edu/sitn/2018/05/01/dopamine-smartphones-battle-time" target="_blank" rel="noopener">Harvard SITN</a></li>
+        <li id="s12">Tristan Harris Senate testimony and dopamine anticipation. <a href="https://maketecheasier.com/mte-google-s-former-design-ethicist-tristan-harris-testified-to-the-us-senate-in-201/" target="_blank" rel="noopener">Make Tech Easier</a></li>
+        <li id="s13">Andrews et al. (2015), Nottingham Trent University, PLOS ONE. <a href="https://www.sundaypost.com/?p=8302" target="_blank" rel="noopener">Sunday Post</a></li>
+        <li id="s14">Roberts &amp; David (2016), Baylor University, partner phubbing study. <a href="https://www.foxla.com/news/study-phubbing-is-ruining-relationships" target="_blank" rel="noopener">Fox LA</a></li>
+        <li id="s15">Denes et al., Phone or affection? Partner phubbing, affection deprivation, and relationship satisfaction. <a href="https://www.psypost.org/affection-deprivation-may-explain-why-phubbing-harms-relationship-satisfaction/" target="_blank" rel="noopener">PsyPost</a></li>
+        <li id="s16">South Korea Ministry of Science and ICT, Survey on Digital Inclusion Indicators (March 2026). <a href="https://view.asiae.co.kr/en/article/2026032616030268495" target="_blank" rel="noopener">Asia Economy</a></li>
+        <li id="s17">Smartphone addiction is increasing across the world: a meta-analysis of 24 countries. Computers in Human Behavior (2022). <a href="https://datalearner.com/academic/journal-papers/0747-5632/volumes-and-issues/241/paper-detail/39209" target="_blank" rel="noopener">Abstract</a></li>
+      </ol>
+      <p class="foot">This site is for general information and doesn't replace medical advice. If you're struggling with your mental health, contact your GP. In Ireland and the UK, Samaritans are free to call on 116 123, any time. Elsewhere, <a href="https://findahelpline.com" target="_blank" rel="noopener">findahelpline.com</a> lists free helplines by country.</p>
+    </div>
+  </section>
+
+</main>
+
+<button class="notif" id="notif" type="button" aria-hidden="true" tabindex="-1">
+  <span class="ic"><i></i></span>
+  <span><small id="notifApp">Feed · now</small><strong id="notifText">Someone mentioned you in a comment</strong></span>
+</button>
+<div class="toast" id="toast" role="status" hidden></div>
+<div class="overlay" id="gotcha" role="dialog" aria-modal="true" aria-labelledby="gotchaH" hidden>
+  <div class="overlay-card">
+    <span class="label" id="gotchaLabel">Got you</span>
+    <h3 id="gotchaH">That took you 1.4 seconds</h3>
+    <p id="gotchaText">There was no comment. You just felt the slot machine at work: a notification promises a reward that might be there, and your brain reaches for it before you decide to. On a real phone the cost doesn't end at the tap. Gloria Mark's research found people take over 20 minutes on average to get back to a task after an interruption.</p>
+    <button class="ghost" id="gotchaBack" type="button">Back to reading</button>
+  </div>
+</div>
+<div class="done-screen" id="done" role="dialog" aria-modal="true" aria-labelledby="doneH" hidden>
+  <span class="label" style="color:var(--bg);opacity:.7">End of feed · Screen time on this page: <span id="doneTime">0:00</span></span>
+  <h2 id="doneH">Look up</h2>
+  <p>Close this tab. Put the phone in another room. The rest of today is yours.</p>
+  <button class="ghost" id="doneBack" type="button">Back to the site</button>
+</div>
+
+<script>
+(function(){
+  // Hero clock, and the hero badge: a pile of unread notifications that can be "cleared"
+  var start = Date.now(), clock = document.getElementById('clock'), badge = document.getElementById('badge');
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function tick(){
+    var s = Math.floor((Date.now()-start)/1000);
+    clock.textContent = Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+    document.getElementById('exitTime').textContent = clock.textContent;
+    document.getElementById('doneTime').textContent = clock.textContent;
+  }
+  setInterval(tick,1000); tick();
+  // The badge stays hidden on arrival. It only shows up once someone has scrolled down and come back up,
+  // the way notifications pile up while you're busy. It can be cleared twice: once to feel the relief, once to see it return.
+  var badgeN = 0, badgeTaps = 0, badgeBusy = false, badgeShown = false, badgeDone = false, maxScroll = 0;
+  function setBadge(n){ badgeN = n; badge.textContent = n; badge.setAttribute('aria-label', n + ' unread notifications'); badge.style.visibility = n ? '' : 'hidden'; }
+  function popBadge(){ if(reduce) return; badge.classList.remove('pop'); void badge.offsetWidth; badge.classList.add('pop'); }
+  setBadge(0);
+  window.addEventListener('scroll', function(){
+    var y = window.scrollY || 0; maxScroll = Math.max(maxScroll, y);
+    if(!badgeShown && maxScroll > 700 && y < 250){ badgeShown = true; setBadge(14); popBadge(); }
+  }, {passive:true});
+  badge.addEventListener('click', function(){
+    if(badgeBusy || badgeDone || !badgeN) return; badgeBusy = true; badgeTaps++;
+    var from = badgeN, t0 = performance.now(), D = reduce ? 0 : 600;
+    (function down(now){
+      var t = D ? Math.min(1, (now - t0)/D) : 1;
+      setBadge(Math.round(from * (1 - t)));
+      if(t < 1) { requestAnimationFrame(down); return; }
+      if(badgeTaps === 1){
+        showToast('Cleared. Felt good, didn\'t it? That little relief is the hook. Red badges are built to nag until you tap them.');
+        setTimeout(function(){ setBadge(from + 3 + Math.floor(Math.random()*4)); popBadge(); badgeBusy = false; }, 3000);
+      } else {
+        badgeDone = true; badge.disabled = true;
+        showToast('And they came back. They always do. The real fix isn\'t tapping faster, it\'s turning notifications off.');
+      }
+    })(t0);
+  });
+
+  // Slot machine
+  var rewards = ['Like','Message','Comment','Follower'];
+  var junk = ['Ad','Products you don\'t need','Something racist','Rage bait','Fake news','A scam','Someone\'s “perfect” life','Bad news','Celebrity gossip','A fight in the comments'];
+  var good = ['Stuff you actually like','Useful information','News from a real friend','A genuine laugh'];
+  var items = rewards.concat(junk, good);
+  function lowerFirst(w){ return w === 'Ad' ? 'an ad' : w.charAt(0).toLowerCase() + w.slice(1); }
+  function shuffled(a){ a = a.slice(); for(var i=a.length-1;i>0;i--){ var j = Math.floor(Math.random()*(i+1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  var strips = ['strip1','strip2','strip3'].map(function(id){ return document.getElementById(id); });
+  var machine = document.getElementById('slotMachine'), lever = document.getElementById('pull');
+  var pulls = 0, wins = 0, goods = 0, spinning = false, H = 64, lastRoll = ['Like','Rage bait','Message'];
+  function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+  lever.addEventListener('click', function(){
+    if(spinning) return; spinning = true; pulls++;
+    machine.classList.remove('win');
+    lever.classList.add('pulled'); setTimeout(function(){ lever.classList.remove('pulled'); }, 260);
+    // Three different pieces of junk, then maybe swap one reel for something better.
+    // Nothing from the previous roll can come up again, so no two rolls in a row look alike.
+    function fresh(list){ var f = list.filter(function(w){ return lastRoll.indexOf(w) < 0; }); return f.length ? f : list; }
+    var finals = shuffled(fresh(junk)).slice(0, 3), slot = Math.floor(Math.random()*3), r = Math.random(), kind = 'junk';
+    if(r < 0.10){ finals[slot] = pick(fresh(good)); kind = 'good'; goods++; }
+    else if(r < 0.40){ finals[slot] = pick(fresh(rewards)); kind = 'reward'; wins++; }
+    lastRoll = finals.slice();
+    var longest = 0;
+    strips.forEach(function(el, i){
+      var current = el.lastElementChild ? el.lastElementChild.textContent : 'Ad';
+      var n = reduce ? 1 : 20 + i*8, seq = [current], bag = [];
+      for(var j=0;j<n;j++){
+        if(!bag.length) bag = shuffled(items);
+        var w = bag.pop(); if(w === seq[seq.length-1]) w = bag.pop() || pick(items);
+        seq.push(w);
+      }
+      if(seq[seq.length-1] === finals[i]) seq.push(pick(junk.filter(function(x){ return x !== finals[i]; })));
+      seq.push(finals[i]);
+      el.style.transition = 'none'; el.style.transform = 'translateY(0)';
+      el.innerHTML = seq.map(function(w, k){
+        var cls = [], last = k === seq.length-1;
+        if(w.length > 9) cls.push('long');
+        if(rewards.indexOf(w) > -1) cls.push(last ? 'hit' : '');
+        if(good.indexOf(w) > -1) cls.push('good');
+        if(last && junk.indexOf(w) > -1) cls.push('junk');
+        return '<span class="' + cls.join(' ').trim() + '">' + w + '</span>';
+      }).join('');
+      void el.offsetHeight;
+      var dur = reduce ? 0 : 900 + i*450; longest = Math.max(longest, dur);
+      el.style.transition = reduce ? 'none' : 'transform ' + dur + 'ms cubic-bezier(.15,.7,.25,1.04)';
+      el.style.transform = 'translateY(' + (-(seq.length-1)*H) + 'px)';
+    });
+    setTimeout(function(){
+      strips.forEach(function(el){ var last = el.lastElementChild.outerHTML; el.style.transition = 'none'; el.innerHTML = last; el.style.transform = 'translateY(0)'; });
+      spinning = false;
+      if(kind !== 'junk') machine.classList.add('win');
+      var msg;
+      if(kind === 'good') msg = 'Something genuinely good: ' + lowerFirst(finals[slot]) + '. It does happen, just rarely. Moments like this keep you pulling through everything else.';
+      else if(kind === 'reward') msg = 'You got a ' + finals[slot].toLowerCase() + '. That little lift is the dopamine hit, and it makes you want to pull again.';
+      else msg = 'No reward. You got ' + lowerFirst(pick(finals)) + ' instead. Feeds serve this up all day, and you still want to pull again.';
+      document.getElementById('pulls').textContent = msg + ' (' + pulls + (pulls === 1 ? ' pull, ' : ' pulls, ') + wins + ' got a reaction, ' + goods + ' worth it.)';
+    }, longest + 80);
+  });
+
+  // Calculator
+  var h = document.getElementById('hours'), a = document.getElementById('age');
+  function calc(){
+    var hours = +h.value, age = +a.value;
+    document.getElementById('hoursOut').textContent = hours;
+    document.getElementById('ageOut').textContent = age;
+    var daysPerYear = hours*365/24;
+    var years = hours*365*(80-age)/(24*365);
+    document.getElementById('days').textContent = Math.round(daysPerYear);
+    document.getElementById('years').textContent = years.toFixed(1);
+    document.getElementById('pct').textContent = Math.round(hours/16*100)+'%';
+  }
+  h.addEventListener('input',calc); a.addEventListener('input',calc); calc();
+
+
+  // ---------- Endless feed with interruption and daily limit ----------
+  var captions = ['You won\'t believe what this dog did next','Rate my lunch 1 to 10','POV: it\'s Monday again','3 tips nobody tells you','This sunset though','Wait for it','Unpopular opinion: cereal is soup','Day 47 of learning guitar','Sponsored: 40% off today only','Tag someone who needs this','Morning routine of a millionaire','Nobody: Me at 2am:','Cat vs cucumber, round 9','Is this the best pizza in town?','Life hack: fold your towels like this','Reply with the first word you see','I tried it so you don\'t have to','Things only 90s kids remember','Rain sounds, 10 hours','Guess the price','Gym fail of the week','The algorithm brought you here','Story time: my landlord','Watch till the end','Sponsored: the app everyone\'s using','My honest review','How it started vs how it\'s going','Pov: you checked one notification'];
+  var adj = ['sunny','lazy','real','daily','salty','urban','tiny','mega','chill','wild'], noun = ['potato','vibes','life','eats','fox','wave','clips','memes','moments','takes'];
+  function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+  function revealSide(){ document.getElementById('feedSideBefore').hidden = true; document.getElementById('feedSideAfter').hidden = false; }
+  var feedList = document.getElementById('feedList'), feedOver = document.getElementById('feedOver'), feedStat = document.getElementById('feedStat');
+  function addPosts(k){
+    for(var i=0;i<k;i++){
+      var d = document.createElement('div'); d.className = 'post';
+      var hue = Math.floor(Math.random()*360);
+      d.innerHTML = '<div class="who"><span>@'+pick(adj)+'_'+pick(noun)+Math.floor(Math.random()*99)+'</span><span>'+(1+Math.floor(Math.random()*59))+'m</span></div>'
+        + '<div class="tile" style="background:linear-gradient(135deg,hsl('+hue+',70%,42%),hsl('+((hue+50)%360)+',75%,32%))">'+pick(captions)+'</div>'
+        + '<div class="meta">♥ '+(Math.floor(Math.random()*9000)+12).toLocaleString('en-IE')+' · '+Math.floor(Math.random()*400)+' comments</div>';
+      feedList.appendChild(d);
+    }
+  }
+  addPosts(12);
+  var LIMIT = 120000, key = 'lookup-feed-v3-' + new Date().toISOString().slice(0,10);
+  var used = 0; try { used = +localStorage.getItem(key) || 0; } catch(e){}
+  var active = 0, seen = 0, lastScroll = 0, interrupted = false, locked = false;
+  function fmt(ms){ var s = Math.floor(ms/1000); return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
+  function stat(){ feedStat.textContent = seen + (seen===1?' post':' posts') + ' · ' + fmt(active); }
+  function showOver(html){ feedOver.innerHTML = html; feedOver.hidden = false; var f = feedOver.querySelector('input,button'); if(f) f.focus(); }
+  function lock(){
+    locked = true; revealSide();
+    document.getElementById('feedLimitNote').textContent = 'Daily limit reached';
+    showOver('<span class="label">Daily limit reached</span><h3>Come back tomorrow. Or don\'t.</h3><p>That was 2 minutes on a feed with nothing in it. Your phone can do this for real apps: App Limits in Screen Time on iPhone, App timers in Digital Wellbeing on Android.</p>');
+  }
+  function interrupt(){
+    interrupted = true; revealSide();
+    var secs = Math.max(1, Math.round(active/1000));
+    showOver('<span class="label">Hold on</span><h3>'+seen+' posts in '+secs+' seconds</h3><p>Name one.</p>'
+      + '<input id="nameOne" type="text" aria-label="Name a post you remember" placeholder="Type one you remember" autocomplete="off">'
+      + '<div class="btns"><button class="pull" id="named" type="button">That\'s my answer</button><button class="ghost" id="cant" type="button">I can\'t</button></div>');
+    function answer(remembered){
+      showOver('<span class="label">'+(remembered?'Fair enough':'Most people can\'t')+'</span>'
+        + '<h3>'+(remembered?'Was it worth the other '+Math.max(0,seen-1)+'?':'That\'s the design working')+'</h3>'
+        + '<p>Scrolling like this doesn\'t feel like a choice and leaves almost nothing behind. The feed doesn\'t need you to enjoy it. It needs you to keep going.</p>'
+        + '<div class="btns"><button class="pull" id="stopFeed" type="button">Stop here</button><button class="ghost" id="keepFeed" type="button">Keep scrolling</button></div>');
+      document.getElementById('stopFeed').onclick = function(){ feedOver.hidden = true; document.getElementById('people').scrollIntoView(); };
+      document.getElementById('keepFeed').onclick = function(){ feedOver.hidden = true; feedList.focus(); };
+    }
+    document.getElementById('named').onclick = function(){ answer(!!document.getElementById('nameOne').value.trim()); };
+    document.getElementById('cant').onclick = function(){ answer(false); };
+  }
+  var feedStart = document.getElementById('feedStart');
+  feedStart.addEventListener('click', function(){ feedStart.hidden = true; feedList.focus(); });
+  if(used >= LIMIT){ feedStart.hidden = true; lock(); }
+  feedList.addEventListener('scroll', function(){
+    if(locked || !feedOver.hidden) return;
+    lastScroll = Date.now();
+    var bottom = feedList.scrollTop + feedList.clientHeight, posts = feedList.children, c = 0;
+    for(var i=0;i<posts.length;i++){ if(posts[i].offsetTop + posts[i].offsetHeight*0.6 <= bottom) c++; else break; }
+    seen = Math.max(seen, c - 1 < 0 ? 0 : c - 1);
+    if(feedList.scrollHeight - bottom < 900) addPosts(8);
+    stat();
+    if(!interrupted && seen >= 40) interrupt();
+  }, {passive:true});
+  setInterval(function(){
+    if(locked || !feedOver.hidden || Date.now() - lastScroll > 2500) return;
+    active += 1000; used += 1000;
+    try { localStorage.setItem(key, String(used)); } catch(e){}
+    stat();
+    if(used >= LIMIT){ lock(); return; }
+    if(!interrupted && active >= 60000) interrupt();
+  }, 1000);
+
+  // ---------- Fake notifications: up to three per visit, with a chime ----------
+  var notif = document.getElementById('notif'), gotcha = document.getElementById('gotcha'), toast = document.getElementById('toast');
+  var notifText = document.getElementById('notifText'), notifApp = document.getElementById('notifApp');
+  var NKEY = 'lookup-notif-v4-';
+  var pings = [
+    {sel:'#hook .psy-cols .point p', app:'Feed', text:'Someone mentioned you in a comment'},
+    {sel:'#people', app:'Photos', text:'3 people liked your photo'},
+    {sel:'#check', app:'Feed', text:'You have a new follower'}
+  ];
+  var current = -1, shownAt = 0, hideT, lastShown = 0, taps = 0, ignores = 0, GAP = 20000;
+  // Sound: a short synthesised chime. Browsers only allow it after the visitor has clicked or tapped something.
+  var actx = null;
+  function unlockAudio(){
+    try { if(!actx) actx = new (window.AudioContext || window.webkitAudioContext)(); if(actx.state === 'suspended') actx.resume(); } catch(e){}
+  }
+  document.addEventListener('pointerdown', unlockAudio, {passive:true});
+  document.addEventListener('keydown', unlockAudio);
+  function chime(){
+    try {
+      if(!actx || actx.state !== 'running') return;
+      var t0 = actx.currentTime;
+      [[1046.5,0],[1568,0.12]].forEach(function(n){
+        var o = actx.createOscillator(), g = actx.createGain();
+        o.type = 'sine'; o.frequency.value = n[0];
+        g.gain.setValueAtTime(0.0001, t0+n[1]);
+        g.gain.exponentialRampToValueAtTime(0.18, t0+n[1]+0.015);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0+n[1]+0.45);
+        o.connect(g); g.connect(actx.destination); o.start(t0+n[1]); o.stop(t0+n[1]+0.5);
+      });
+    } catch(e){}
+  }
+  function pingSeen(i){ try { return sessionStorage.getItem(NKEY+i) === '1'; } catch(e){ return false; } }
+  function markPingSeen(i){ try { sessionStorage.setItem(NKEY+i,'1'); } catch(e){} }
+  function showToast(msg){
+    toast.textContent = msg; toast.hidden = false;
+    clearTimeout(toast._t); toast._t = setTimeout(function(){ toast.hidden = true; }, Math.max(4000, msg.length * 60));
+  }
+  function showNotif(i){
+    if(current > -1 || pingSeen(i) || !gotcha.hidden || Date.now() - lastShown < GAP) return false;
+    current = i; markPingSeen(i); lastShown = Date.now();
+    notifApp.textContent = pings[i].app + ' · now'; notifText.textContent = pings[i].text;
+    notif.removeAttribute('aria-hidden'); notif.tabIndex = 0;
+    notif.classList.add('show'); shownAt = performance.now(); chime();
+    hideT = setTimeout(function(){
+      hideNotif(); ignores++;
+      showToast(taps ? 'You ignored that one. That\'s the skill.' : 'You ignored it. Nice. Most people don\'t.');
+    }, 7000);
+    return true;
+  }
+  function hideNotif(){ notif.classList.remove('show'); notif.setAttribute('aria-hidden','true'); notif.tabIndex = -1; current = -1; }
+  if('IntersectionObserver' in window){
+    pings.forEach(function(pg, i){
+      var el = document.querySelector(pg.sel); if(!el || pingSeen(i)) return;
+      var waitT, retryT;
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          clearTimeout(waitT); clearInterval(retryT);
+          if(en.isIntersecting){
+            waitT = setTimeout(function(){
+              if(showNotif(i)) io.disconnect();
+              else retryT = setInterval(function(){ if(showNotif(i)){ clearInterval(retryT); io.disconnect(); } }, 3000);
+            }, 3000);
+          }
+        });
+      }, {threshold:0, rootMargin:'-30% 0px -30% 0px'});
+      io.observe(el);
+    });
+  }
+  notif.addEventListener('click', function(){
+    clearTimeout(hideT); taps++;
+    var secs = (performance.now() - shownAt)/1000, t = secs < 10 ? secs.toFixed(1) : String(Math.round(secs));
+    var h = document.getElementById('gotchaH'), body = document.getElementById('gotchaText'), lab = document.getElementById('gotchaLabel');
+    if(taps === 1){
+      lab.textContent = 'Got you';
+      h.textContent = 'That took you ' + t + ' seconds';
+      body.textContent = 'There was no ' + (current === 1 ? 'photo' : current === 2 ? 'follower' : 'comment') + '. You just felt the slot machine at work: a notification promises a reward that might be there, and your brain reaches for it before you decide to. On a real phone the cost doesn\'t end at the tap. Gloria Mark\'s research found people take over 20 minutes on average to get back to a task after an interruption.';
+    } else if(taps === 2){
+      lab.textContent = 'Got you again';
+      h.textContent = t + ' seconds. Again.';
+      body.textContent = 'You knew these were fake, and you still tapped. That\'s how deep the habit runs. It isn\'t about what\'s in the notification. It\'s the reach itself.';
+    } else {
+      lab.textContent = 'Three for three';
+      h.textContent = 'Every single one';
+      body.textContent = 'Nobody is judging. This is exactly what the apps are built to do, and it works on almost everyone. Try the next one on a real phone: let it sit for five minutes and see what happens.';
+    }
+    hideNotif(); gotcha.hidden = false; document.getElementById('gotchaBack').focus();
+  });
+  document.getElementById('gotchaBack').addEventListener('click', function(){ gotcha.hidden = true; lastShown = Date.now(); });
+
+  // ---------- Exit ----------
+  var done = document.getElementById('done');
+  document.getElementById('leave').addEventListener('click', function(){ done.hidden = false; document.getElementById('doneBack').focus(); });
+  document.getElementById('doneBack').addEventListener('click', function(){ done.hidden = true; });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ gotcha.hidden = true; done.hidden = true; } });
+
+
+  // ---------- Brain battery ----------
+  (function(){
+    var box = document.querySelector('.battery-box'); if(!box) return;
+    var fill = document.getElementById('batFill'), pct = document.getElementById('batPct'), note = document.getElementById('batNote');
+    var lvl = 100, target = 55, vis = false;
+    var notes = {55:'Phone face-down on the desk. Silent. Still draining.', 72:'Phone in your pocket. Out of sight, still on your mind.', 92:'Phone in another room. Most of your focus is back.'};
+    function draw(){
+      fill.style.width = lvl + '%';
+      fill.style.backgroundColor = lvl > 80 ? 'var(--blue)' : (lvl > 65 ? 'var(--warn)' : 'var(--alert)');
+      pct.textContent = Math.round(lvl) + '%';
+    }
+    if('IntersectionObserver' in window){ new IntersectionObserver(function(e){ vis = e[0].isIntersecting; }, {threshold:0.4}).observe(box); } else vis = true;
+    setInterval(function(){
+      if(!vis || lvl === target) return;
+      if(reduce) lvl = target;
+      else if(lvl > target) lvl = Math.max(target, lvl - 0.15);
+      else lvl = Math.min(target, lvl + 1.2);
+      draw();
+    }, 100);
+    box.querySelectorAll('.chip').forEach(function(c){ c.addEventListener('click', function(){
+      box.querySelectorAll('.chip').forEach(function(o){ o.classList.remove('on'); o.setAttribute('aria-pressed','false'); });
+      c.classList.add('on'); c.setAttribute('aria-pressed','true');
+      target = +c.getAttribute('data-t'); note.textContent = notes[target];
+    }); });
+    draw();
+  })();
+
+  // ---------- Connection illustration (relationships) ----------
+  (function(){
+    var box = document.getElementById('connBox'); if(!box) return;
+    var gaze = document.getElementById('connGaze'), right = document.getElementById('connRight'), glow = document.getElementById('connGlow');
+    var phone = document.getElementById('connPhone'), note = document.getElementById('connNote'), barsG = box.querySelector('.conn-bars');
+    var steps = [
+      {b:4, look:0, glow:0, t:'Full attention. Eye contact.'},
+      {b:4, look:0, glow:1, t:'A buzz on the table.'},
+      {b:3, look:1, glow:1, t:'Just a quick glance.'},
+      {b:3, look:0, glow:0, t:'"Sorry, what were you saying?"'},
+      {b:2, look:1, glow:1, t:'Another buzz. Another look.'},
+      {b:2, look:1, glow:0, t:'Half listening.'},
+      {b:1, look:1, glow:1, t:'Phubbed. They noticed.'},
+      {b:1, look:1, glow:0, t:'Phubbed. They noticed.'},
+      {b:4, look:0, glow:0, away:1, t:'Phone away. Connection back.'},
+      {b:4, look:0, glow:0, away:1, t:'Phone away. Connection back.'}
+    ];
+    function show(s){
+      for(var i=1;i<=4;i++) document.getElementById('cb'+i).classList.toggle('on', i <= s.b);
+      barsG.classList.toggle('mid', s.b === 2 || s.b === 3); barsG.classList.toggle('low', s.b === 1);
+      gaze.style.opacity = [0, .15, .4, .7, 1][s.b];
+      right.classList.toggle('down', !!s.look); glow.classList.toggle('on', !!s.glow);
+      phone.style.opacity = s.away ? 0 : 1; glow.style.display = s.away ? 'none' : '';
+      note.textContent = s.t;
+    }
+    if(reduce){ show(steps[5]); return; }
+    var k = 0, vis = false;
+    if('IntersectionObserver' in window){ new IntersectionObserver(function(e){ vis = e[0].isIntersecting; }, {threshold:0.4}).observe(box); } else vis = true;
+    show(steps[0]);
+    setInterval(function(){ if(!vis) return; k = (k + 1) % steps.length; show(steps[k]); }, 2200);
+  })();
+
+  // ---------- Around the world: live lock screens ----------
+  (function(){
+    var wrap = document.getElementById('phones'); if(!wrap) return;
+    var cities = [
+      {c:'Dublin', tz:'Europe/Dublin', loc:'en-IE', lang:'en', m:'You have a new message'},
+      {c:'New York', tz:'America/New_York', loc:'en-US', lang:'en', m:'Someone mentioned you in a comment'},
+      {c:'São Paulo', tz:'America/Sao_Paulo', loc:'pt-BR', lang:'pt', m:'Você tem uma nova mensagem'},
+      {c:'Riyadh', tz:'Asia/Riyadh', loc:'ar-SA-u-ca-gregory', lang:'ar', dir:'rtl', m:'لديك رسالة جديدة'},
+      {c:'Mumbai', tz:'Asia/Kolkata', loc:'hi-IN', lang:'hi', m:'आपके लिए एक नया संदेश है'},
+      {c:'Bangkok', tz:'Asia/Bangkok', loc:'th-TH', lang:'th', m:'คุณมีข้อความใหม่'},
+      {c:'Seoul', tz:'Asia/Seoul', loc:'ko-KR', lang:'ko', m:'새 메시지가 도착했습니다'},
+      {c:'Tokyo', tz:'Asia/Tokyo', loc:'ja-JP', lang:'ja', m:'新しいメッセージがあります'}
+    ];
+    var els = cities.map(function(x){
+      var d = document.createElement('div'); d.className = 'mini';
+      d.innerHTML = '<span class="city"></span><span class="t"></span><span class="d"></span><div class="bubble"><i></i><span></span></div><span class="homebar"></span>';
+      d.querySelector('.city').textContent = x.c;
+      var bs = d.querySelector('.bubble span'); bs.textContent = x.m; bs.lang = x.lang; if(x.dir){ d.querySelector('.bubble').dir = x.dir; }
+      d.querySelector('.d').lang = x.lang;
+      wrap.appendChild(d); return d;
+    });
+    function tick(){
+      var now = new Date();
+      cities.forEach(function(x, i){
+        var el = els[i], t = '--:--', dl = '', h = 12;
+        try {
+          t = new Intl.DateTimeFormat('en-GB', {hour:'2-digit', minute:'2-digit', hourCycle:'h23', timeZone:x.tz}).format(now);
+          h = parseInt(t, 10);
+          dl = new Intl.DateTimeFormat(x.loc, {weekday:'short', day:'numeric', month:'short', timeZone:x.tz}).format(now);
+        } catch(e){}
+        el.querySelector('.t').textContent = t; el.querySelector('.d').textContent = dl;
+        el.classList.toggle('night', h < 6 || h >= 22);
+      });
+    }
+    tick(); setInterval(tick, 10000);
+    if(reduce){ els.forEach(function(e){ e.classList.add('ping'); }); return; }
+    var k = 0, count = 0, vis = false, counter = document.getElementById('pingCount');
+    if('IntersectionObserver' in window){ new IntersectionObserver(function(e){ vis = e[0].isIntersecting; }, {threshold:0.3}).observe(wrap); } else vis = true;
+    setInterval(function(){
+      if(!vis) return;
+      var el = els[k]; k = (k + 1) % els.length;
+      el.classList.add('ping'); count++;
+      counter.textContent = 'Notifications landed while you\'ve been watching: ' + count;
+      setTimeout(function(){ el.classList.remove('ping'); }, 3600);
+    }, 1100);
+  })();
+
+  // ---------- What helps: settings switches ----------
+  (function(){
+    var btns = document.querySelectorAll('.set-btn'); if(!btns.length) return;
+    var count = document.getElementById('setCount'), cta = document.querySelector('.help-cta');
+    function update(){
+      var n = 0; btns.forEach(function(b){ if(b.getAttribute('aria-checked') === 'true') n++; });
+      count.textContent = n + ' of ' + btns.length + ' switched on';
+      count.classList.toggle('all', n === btns.length);
+      cta.classList.toggle('done', n === btns.length);
+      document.getElementById('helpCtaH').textContent = n === btns.length ? 'All six on.' : (n ? 'Good. Now do it tonight.' : 'Pick one. Do it tonight.');
+      document.getElementById('helpCtaP').textContent = n === btns.length
+        ? 'That\'s a phone that works for you, not the other way round. Now put this one down and start.'
+        : (n ? 'Switching it on here is the easy part. The real switch happens on your phone and in your home, before bed tonight.'
+             : 'You don\'t need all six. Switch on the one that would make the biggest difference to you, then actually do it before bed.');
+    }
+    btns.forEach(function(b){
+      b.addEventListener('click', function(){
+        var on = b.getAttribute('aria-checked') !== 'true';
+        b.setAttribute('aria-checked', on ? 'true' : 'false');
+        document.getElementById(b.getAttribute('aria-controls')).hidden = !on;
+        update();
+      });
+    });
+    update();
+  })();
+
+  // ---------- Text neck illustration ----------
+  (function(){
+    var box = document.getElementById('neckBox'); if(!box) return;
+    var head = document.getElementById('neckHead'), arm = document.getElementById('neckArm'), hand = document.getElementById('neckHand');
+    var phone = document.getElementById('neckPhone'), sight = document.getElementById('neckSight'), arc = document.getElementById('neckArc');
+    var kg = document.getElementById('neckKg'), deg = document.getElementById('neckDeg'), note = document.getElementById('neckNote');
+    var PV = {x:96, y:112}, SH = {x:99, y:122}, UA = 30, FA = 36;
+    // h = head tilt, a1 = upper arm, a2 = forearm (degrees forward from straight down), p = phone tilt
+    var UP = {a1:96, a2:136, p:0}, MID = {a1:50, a2:118, p:28}, LOW = {a1:15, a2:95, p:58};
+    function st(h, arm, k, t){ return {h:h, a1:arm.a1, a2:arm.a2, p:arm.p, k:k, t:t}; }
+    var steps = [
+      st(0, UP, 5, 'Phone at eye level, head upright. About 5 kg on your neck.'),
+      st(15, MID, 12, 'The phone drops a little. So does your head.'),
+      st(30, LOW, 18, 'Scrolling. The load keeps climbing.'),
+      st(45, LOW, 22, 'Deep in the feed.'),
+      st(60, LOW, 27, 'The typical texting angle. Like carrying an eight-year-old on your neck.'),
+      st(60, LOW, 27, 'The typical texting angle. Like carrying an eight-year-old on your neck.'),
+      st(0, UP, 5, 'Phone up to your eyes, head back up. Back to 5 kg.'),
+      st(0, UP, 5, 'Phone up to your eyes, head back up. Back to 5 kg.')
+    ];
+    function rot(pt, c, a){ var r = a*Math.PI/180, dx = pt.x-c.x, dy = pt.y-c.y; return {x: c.x + dx*Math.cos(r) - dy*Math.sin(r), y: c.y + dx*Math.sin(r) + dy*Math.cos(r)}; }
+    function draw(g){
+      head.setAttribute('transform', 'rotate(' + g.h.toFixed(2) + ' ' + PV.x + ' ' + PV.y + ')');
+      var r1 = g.a1*Math.PI/180, r2 = g.a2*Math.PI/180;
+      var el = {x: SH.x + UA*Math.sin(r1), y: SH.y + UA*Math.cos(r1)};
+      var hd = {x: el.x + FA*Math.sin(r2), y: el.y + FA*Math.cos(r2)};
+      arm.setAttribute('d', 'M' + SH.x + ' ' + SH.y + ' L' + el.x.toFixed(1) + ' ' + el.y.toFixed(1) + ' L' + hd.x.toFixed(1) + ' ' + hd.y.toFixed(1));
+      hand.setAttribute('cx', hd.x.toFixed(1)); hand.setAttribute('cy', hd.y.toFixed(1));
+      phone.setAttribute('transform', 'translate(' + hd.x.toFixed(1) + ' ' + hd.y.toFixed(1) + ') rotate(' + g.p.toFixed(1) + ')');
+      var eye = rot({x:109, y:76}, PV, g.h), scr = rot({x: hd.x - 4, y: hd.y - 12}, hd, g.p);
+      sight.setAttribute('x1', eye.x.toFixed(1)); sight.setAttribute('y1', eye.y.toFixed(1));
+      sight.setAttribute('x2', scr.x.toFixed(1)); sight.setAttribute('y2', scr.y.toFixed(1));
+      if(g.h > 0.5){
+        var R = 76, rr = g.h*Math.PI/180;
+        arc.setAttribute('d', 'M' + PV.x + ' ' + (PV.y - R) + ' A' + R + ' ' + R + ' 0 0 1 ' + (PV.x + R*Math.sin(rr)).toFixed(1) + ' ' + (PV.y - R*Math.cos(rr)).toFixed(1));
+      } else arc.setAttribute('d', '');
+    }
+    function label(s){
+      kg.textContent = s.k + ' kg';
+      kg.classList.toggle('mid', s.k >= 12 && s.k < 22); kg.classList.toggle('high', s.k >= 22);
+      deg.textContent = 'Head tilt: ' + s.h + '°'; note.textContent = s.t;
+    }
+    var cur = {h:0, a1:UP.a1, a2:UP.a2, p:UP.p};
+    function tween(to){
+      var from = {h:cur.h, a1:cur.a1, a2:cur.a2, p:cur.p}, t0 = performance.now(), D = 1000;
+      function f(now){
+        var t = Math.min(1, (now - t0)/D), e = t < .5 ? 2*t*t : 1 - Math.pow(-2*t + 2, 2)/2;
+        ['h','a1','a2','p'].forEach(function(k){ cur[k] = from[k] + (to[k] - from[k])*e; });
+        draw(cur); if(t < 1) requestAnimationFrame(f);
+      }
+      requestAnimationFrame(f);
+    }
+    if(reduce){ cur = {h:60, a1:LOW.a1, a2:LOW.a2, p:LOW.p}; draw(cur); label(steps[4]); return; }
+    draw(cur); label(steps[0]);
+    var k = 0, vis = false;
+    if('IntersectionObserver' in window){ new IntersectionObserver(function(e){ vis = e[0].isIntersecting; }, {threshold:0.4}).observe(box); } else vis = true;
+    setInterval(function(){ if(!vis) return; k = (k + 1) % steps.length; label(steps[k]); tween(steps[k]); }, 2200);
+  })();
+
+  // ---------- 14-day challenge: start and finish here, everything else on paper ----------
+  var tracker = document.getElementById('tracker'), TKEY = 'lookup-challenge-v3';
+  var dl = null;
+  function todayStr(){ var d = new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+  function toDate(str, add){ var p = str.split('-'); return new Date(+p[0], +p[1]-1, +p[2] + (add||0)); }
+  function dayDiff(a, b){ return Math.round((toDate(b) - toDate(a))/86400000); }
+  function nice(d){ return d.toLocaleDateString(undefined, {weekday:'long', day:'numeric', month:'long'}); }
+  function loadCh(){ try { return JSON.parse(localStorage.getItem(TKEY)) || null; } catch(e){ return null; } }
+  var ch = loadCh();
+  function saveCh(){ try { if(ch) localStorage.setItem(TKEY, JSON.stringify(ch)); else localStorage.removeItem(TKEY); } catch(e){} }
+    function planButton(){
+    return '<div class="btns"><a class="ghost" href="end-of-feed-14-day-plan.pdf" download>Download the printable plan (PDF)</a></div><p class="fine">No printer? Draw 14 boxes on a sheet of paper. It works just as well.</p>';
+  }
+  function wirePlan(){}
+  function renderCh(){
+    if(!ch){
+      tracker.innerHTML = '<span class="label">Start here</span><h3>Are you in?</h3>'
+        + '<ol class="ch-steps"><li>Print the plan, or draw 14 boxes on a sheet of paper.</li><li>Fill in page 1: how you feel today.</li><li>Press "I\'m in", then close this site.</li><li>Come back once, on day 14. Not before.</li></ol>'
+        + planButton()
+        + '<button class="pull big" id="chStart" type="button">I\'m in. Start today</button>';
+      document.getElementById('chStart').onclick = function(){ ch = {start: todayStr()}; saveCh(); renderCh(); };
+      wirePlan(); return;
+    }
+    var t = dayDiff(ch.start, todayStr()), finish = toDate(ch.start, 14);
+    if(t < 14){
+      tracker.innerHTML = '<span class="label">You\'re in</span><h3>Day ' + (t+1) + ' of 14</h3>'
+        + '<p class="msg">See you on ' + nice(finish) + '.</p>'
+        + '<p>You don\'t need to check in here. That would defeat the point. Tick your days on paper, then put the screen down.</p>'
+        + planButton()
+        + '<button class="pull" id="chClose" type="button">Done. Close this site</button>'
+        + '<button class="linkbtn" id="chReset" type="button">Start over</button>';
+      document.getElementById('chClose').onclick = function(){ document.getElementById('leave').click(); };
+    } else {
+      tracker.innerHTML = '<span class="label">Welcome back</span><h3>14 days. Done.</h3>'
+        + '<p class="msg">Get your sheet out and answer the day 14 questions. How do you feel compared to day one?</p>'
+        + '<ul class="ch-steps"><li>Let back onto your phone only what you actually missed.</li><li>Keep notifications off for everything except people.</li><li>Keep the phone out of the bedroom.</li></ul>'
+        + '<p>Whatever you let back, you chose it this time. Not the apps.</p>'
+        + '<button class="linkbtn" id="chReset" type="button">Start a new challenge</button>';
+    }
+    wirePlan();
+    document.getElementById('chReset').onclick = function(){
+      if(this.dataset.armed){ ch = null; saveCh(); renderCh(); }
+      else { this.dataset.armed = '1'; this.textContent = 'Tap again to confirm'; }
+    };
+  }
+  renderCh();
+
+  // Self-check
+  var boxes = document.querySelectorAll('#quiz input');
+  function score(){
+    var n = 0; boxes.forEach(function(b){ if(b.checked) n++; });
+    document.getElementById('score').textContent = n+'/8';
+    var v = document.getElementById('verdict'), adv = document.getElementById('advice');
+    if(n===0){ v.textContent='Start ticking'; adv.textContent='Be honest. Nobody else sees this.'; }
+    else if(n<=2){ v.textContent='Mostly in control'; adv.textContent='A few habits to watch. Pick one change from the list below and keep it for a week.'; }
+    else if(n<=5){ v.textContent='The hooks are in'; adv.textContent='Your phone is shaping your day more than you are. Start with distance: another room for work and meals, out of the bedroom at night.'; }
+    else if(n<=7){ v.textContent='Time to take it back'; adv.textContent='These are the signs researchers associate with problematic use. Try the 14-day challenge, and tell someone you trust that you\'re doing it.'; }
+    else { v.textContent='You don\'t have to do this alone'; adv.textContent='Every one of these is true for you, and that takes honesty to admit. When a habit is this much in control, willpower alone usually isn\'t enough, and that\'s not a personal failing. Please talk to someone: a friend or family member you trust, and your GP, who can help and point you to support. If your phone use is tied up with feeling low, anxious or alone, that matters just as much. In Ireland and the UK, Samaritans are free to call on 116 123, any time. Elsewhere, findahelpline.com lists free helplines by country.'; }
+    document.querySelector('.score').classList.toggle('urgent', n === 8);
+    if(n>=1 && document.getElementById('q8').checked){ adv.textContent += ' And put the phone out of reach in the car. That one can\'t wait.'; }
+  }
+  boxes.forEach(function(b){ b.addEventListener('change',score); });
+})();
+</script>
+
+</body>
+</html>
