@@ -7,15 +7,29 @@
 <meta name="theme-color" content="#0A0E26" media="(prefers-color-scheme: dark)">
 <meta name="theme-color" content="#ECEEF4" media="(prefers-color-scheme: light)">
 <meta property="og:title" content="End of Feed">
-<meta property="og:description" content="Your feed was designed to never end. This is where it does.">
+<meta property="og:description" content="Your feed was built to never end. This is where it does. Have you got 10 minutes?">
 <meta property="og:url" content="https://endoffeed.com/">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="End of Feed">
+<meta property="og:image" content="https://endoffeed.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="End of Feed. Your feed was built to never end. This is where it does. A phone lock screen at 02:47 full of notifications.">
+<meta property="og:locale" content="en_IE">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="End of Feed">
+<meta name="twitter:description" content="Your feed was built to never end. This is where it does.">
+<meta name="twitter:image" content="https://endoffeed.com/og-image.png">
+<link rel="canonical" href="https://endoffeed.com/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"End of Feed","url":"https://endoffeed.com/","description":"A campaign about phone addiction: what endless scrolling does to your brain, body, relationships and time, and what helps.","inLanguage":"en-IE"}</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='12' fill='%23F0312B'/%3E%3C/svg%3E">
 <title>End of Feed</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@500;700&display=swap">
 <style>
+[hidden]{display:none!important}
+*,*::before,*::after{box-sizing:border-box}
 /* Layout: a lock-screen poster. Giant condensed headlines, one notification-red badge as the recurring signal, each section a "notification" you have to read. */
 :root{
   --bg:#ECEEF4;
@@ -408,7 +422,7 @@ sup a{font-family:var(--mono);font-size:.7em;text-decoration:none;color:var(--bl
 .done-screen > *{max-width:1120px;width:100%;margin:0 auto}
 .done-screen h2{font-size:clamp(5rem,19vw,14rem)}
 .done-screen p{font-size:1.25rem;max-width:44ch}
-a.ghost{display:inline-block;text-decoration:none}
+a.ghost{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
 .done-screen .ghost{justify-self:start;margin:0}
 @media (max-width:560px){.actions .action-cta{grid-column:auto}}
 .phone{height:min(560px,72vh)}
@@ -418,9 +432,89 @@ a.ghost{display:inline-block;text-decoration:none}
 @media (max-width:960px){.phones{grid-auto-columns:128px}.swipe-hint{display:block}}
 @media (prefers-reduced-motion:reduce){.badge.pop{animation:none}*{scroll-behavior:auto}.notif{transition:none}}
 html{scroll-behavior:smooth}
+
+/* opening screen */
+html.gated,html.gated body{overflow:hidden}
+.gate{position:fixed;inset:0;z-index:80;background:var(--bg);color:var(--ink);overflow-y:auto;display:grid;align-items:center;padding:calc(24px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.gate-in{max-width:720px;width:100%;margin:0 auto;display:grid;gap:20px}
+.gate .brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:1.4rem}
+.gate .brand i{width:11px;height:11px;border-radius:50%;background:var(--alert);display:block}
+.gate h1{font-size:clamp(3.6rem,14vw,8rem)}
+.gate h1 em{font-style:normal;color:var(--alert)}
+.gate .lede{font-size:clamp(1.15rem,2.6vw,1.45rem);line-height:1.45;max-width:36ch}
+.gate .ask{font-weight:700;font-size:1.15rem}
+.gate .choices{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
+.gate .choices button{font-family:var(--mono);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:.95rem;border-radius:999px;padding:18px 20px;cursor:pointer;min-height:56px}
+.gate .yes{background:var(--alert);color:var(--alert-ink);border:0}
+.gate .no{background:transparent;color:var(--ink);border:2px solid var(--ink)}
+.quick-list{margin:0;padding:0;list-style:none;display:grid;gap:12px}
+.quick-list li{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;font-size:1.05rem;line-height:1.45}
+.quick-list b{font-family:var(--display);font-weight:900;font-size:2.2rem;line-height:.9;display:block;margin-bottom:6px;text-transform:uppercase}
+.quick-do{background:var(--ink);color:var(--bg);border-radius:16px;padding:20px;display:grid;gap:8px}
+.quick-do .label{color:var(--bg);opacity:.75}
+.quick-do h2{font-size:clamp(2rem,7vw,3rem)}
+.promise{font-family:var(--mono);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:.85rem;color:var(--alert)}
+.quick-help{border:2px solid var(--line);border-radius:16px;padding:18px 20px;display:grid;gap:10px;font-size:1rem;line-height:1.5}
+.quick-help ul{margin:0;padding-left:1.1em;display:grid;gap:6px}
+.quick-help a{font-weight:700}
+.quick-help a[href^="tel"],.quick-help a[href^="sms"]{white-space:nowrap}
+.share-box{border:1px solid var(--bg);border-color:color-mix(in srgb,currentColor 30%,transparent);border-radius:16px;padding:18px 20px;display:grid;gap:10px;max-width:560px;margin:8px 0 4px}
+.share-box .label{color:inherit;opacity:.75}
+.share-box .btns{display:flex;flex-wrap:wrap;gap:10px}
+.share-box .ghost{min-height:48px}
+.share-box .fine{font-size:.9rem;min-height:1.4em}
 </style>
 </head>
 <body>
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gateH" hidden>
+  <div class="gate-in" id="gateAsk">
+    <span class="brand"><i></i>End of Feed</span>
+    <h1 id="gateH">Your attention is <em>worth money</em></h1>
+    <p class="lede">Every minute you scroll makes someone else richer. This site is about where your attention goes, who you're giving it to, and what it's costing you.</p>
+    <p class="ask">It takes about 10 minutes to read. Have you got it in you?</p>
+    <div class="choices">
+      <button class="yes" id="gateYes" type="button">Yes, I can do it</button>
+      <button class="no" id="gateNo" type="button">No, I'm too far gone</button>
+    </div>
+  </div>
+  <div class="gate-in" id="gateQuick" hidden>
+    <span class="brand"><i></i>End of Feed</span>
+    <span class="label">The 60-second version</span>
+    <h1 id="gateQuickH" tabindex="-1">Fair enough. <em>Here's the short one.</em></h1>
+    <p class="lede">No judgement. Feeds are built to wear down exactly this kind of attention. Three things worth knowing:</p>
+    <ul class="quick-list">
+      <li><b>70%</b>of Irish adults feel they use their phone too much. You're not the only one.</li>
+      <li><b>Even when it's off</b>Just having your phone on the desk lowers your focus. Out of the room is the only place it stops.</li>
+      <li><b>Two weeks</b>People who blocked mobile internet for two weeks got their attention back by as much as ten years of ageing takes away. It's not permanent.</li>
+    </ul>
+    <div class="quick-do">
+      <span class="label">If you only do one thing</span>
+      <h2>Tonight, charge your phone outside the bedroom</h2>
+      <p>Get a cheap alarm clock. Your sleep, your mornings and your first hour of the day go back to you.</p>
+    </div>
+    <div class="quick-help">
+      <span class="label">If it feels like more than a habit</span>
+      <p>If your phone use is tied up with feeling low, anxious or stuck, you don't have to sort it out alone. Talk to someone you trust, or your GP.</p>
+      <ul>
+        <li><b>Samaritans</b> (Ireland and UK): call <a href="tel:116123">116 123</a>, free, any time</li>
+        <li><b>Text About It</b> (Ireland): text HELLO to <a href="sms:50808?body=HELLO">50808</a>, free, any time</li>
+        <li><b>Anywhere else:</b> <a href="https://findahelpline.com" target="_blank" rel="noopener">findahelpline.com</a> lists free helplines by country</li>
+      </ul>
+    </div>
+    <div class="choices">
+      <button class="yes" id="gateFull" type="button">Read the full version anyway</button>
+      <button class="no" id="gateLeave" type="button">That's enough. I'm off</button>
+    </div>
+  </div>
+</div>
+<script>
+// Decide before first paint whether to show the opening screen, so the site never flashes underneath.
+(function(){ var seen = null; try { seen = localStorage.getItem('eof-gate-v1'); } catch(e){}
+  // People arriving from a search engine, and search crawlers, go straight to the content.
+  var ref = document.referrer || '', ua = navigator.userAgent || '';
+  if(/\/\/([a-z0-9-]+\.)*(google|bing|duckduckgo|yahoo|ecosia|baidu|yandex|naver|brave|qwant|startpage)\./i.test(ref) || /bot|crawl|spider|slurp|facebookexternalhit|whatsapp|preview/i.test(ua)) seen = 'search';
+  if(!seen){ document.documentElement.classList.add('gated'); document.getElementById('gate').hidden = false; } })();
+</script>
 
 
 <header class="topbar">
@@ -894,8 +988,19 @@ html{scroll-behavior:smooth}
     <div class="wrap">
       <div class="feed-end" aria-hidden="true"><i></i><span>End of feed</span><i></i></div>
       <span class="label">You've reached the end</span>
+      <p class="promise" id="promise" hidden></p>
       <h2>You've been here <span id="exitTime">0:00</span></h2>
       <p>No more posts. No next video. Nothing new loading. That's how a feed should end. Now the best thing this website can do is let you go.</p>
+      <div class="share-box">
+        <span class="label">Everyone knows someone</span>
+        <p>Send this to the person you thought of while you were reading. Or the one who'll laugh at you for taking ten minutes to read it.</p>
+        <div class="btns">
+          <button class="ghost" id="shareBtn" type="button">Send this to someone</button>
+          <a class="ghost" id="shareWa" href="https://wa.me/?text=Have%20you%20got%2010%20minutes%3F%20Your%20feed%20was%20built%20to%20never%20end.%20This%20is%20where%20it%20does.%20https%3A%2F%2Fendoffeed.com" target="_blank" rel="noopener" hidden>WhatsApp</a>
+          <button class="ghost" id="shareCopy" type="button" hidden>Copy link</button>
+        </div>
+        <p class="fine" id="shareMsg" aria-live="polite"></p>
+      </div>
       <button class="pull big" id="leave" type="button">Close this tab and look up</button>
     </div>
   </section>
@@ -1217,6 +1322,59 @@ html{scroll-behavior:smooth}
   });
   document.getElementById('gotchaBack').addEventListener('click', function(){ gotcha.hidden = true; lastShown = Date.now(); });
 
+
+  // ---------- Opening screen: once per visitor ----------
+  (function(){
+    var gate = document.getElementById('gate'), ask = document.getElementById('gateAsk'), quick = document.getElementById('gateQuick');
+    var behind = [document.querySelector('header.topbar'), document.querySelector('main')];
+    var GKEY = 'eof-gate-v1', PKEY = 'eof-promise';
+    function setChoice(v){ try { localStorage.setItem(GKEY, v); sessionStorage.setItem(PKEY, v); } catch(e){} }
+    function close(){
+      gate.hidden = true; document.documentElement.classList.remove('gated');
+      behind.forEach(function(el){ if(el) el.inert = false; }); window.scrollTo(0,0);
+    }
+    if(document.documentElement.classList.contains('gated')){
+      gate.hidden = false; behind.forEach(function(el){ if(el) el.inert = true; });
+      document.getElementById('gateYes').focus();
+    }
+    document.getElementById('gateYes').onclick = function(){ setChoice('yes'); close(); };
+    document.getElementById('gateNo').onclick = function(){
+      setChoice('no'); ask.hidden = true; quick.hidden = false; gate.scrollTop = 0; document.getElementById('gateQuickH').focus();
+    };
+    document.getElementById('gateFull').onclick = function(){ setChoice('no-then-yes'); close(); };
+    document.getElementById('gateLeave').onclick = function(){ close(); document.getElementById('leave').click(); };
+    // The ending holds people to what they said at the start
+    var promise = document.getElementById('promise'), exit = document.getElementById('exit');
+    function fillPromise(){
+      var p = null; try { p = sessionStorage.getItem(PKEY); } catch(e){}
+      if(p === 'yes') promise.textContent = 'You said you could do it. You did.';
+      else if(p === 'no-then-yes') promise.textContent = 'You said you were too far gone. You made it to the end anyway.';
+      else return;
+      promise.hidden = false;
+    }
+    if(exit && 'IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(e){ if(e[0].isIntersecting){ fillPromise(); io.disconnect(); } }, {threshold:0.3});
+      io.observe(exit);
+    }
+  })();
+
+  // ---------- Share: one moment, at the end ----------
+  (function(){
+    var url = 'https://endoffeed.com/', text = 'Have you got 10 minutes? Your feed was built to never end. This is where it does.';
+    var btn = document.getElementById('shareBtn'), wa = document.getElementById('shareWa'), cp = document.getElementById('shareCopy'), msg = document.getElementById('shareMsg');
+    function fallback(){ btn.hidden = true; wa.hidden = false; cp.hidden = false; }
+    if(!navigator.share) fallback();
+    btn.onclick = function(){
+      navigator.share({title: 'End of Feed', text: text, url: url}).then(function(){ msg.textContent = 'Sent. Now put the phone down.'; })
+        .catch(function(e){ if(!e || e.name !== 'AbortError') fallback(); });
+    };
+    cp.onclick = function(){
+      var done = function(){ msg.textContent = 'Link copied. Paste it to them.'; };
+      if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done, function(){ msg.textContent = url; });
+      else msg.textContent = url;
+    };
+  })();
+
   // ---------- Exit ----------
   var done = document.getElementById('done');
   document.getElementById('leave').addEventListener('click', function(){ done.hidden = false; document.getElementById('doneBack').focus(); });
@@ -1239,7 +1397,7 @@ html{scroll-behavior:smooth}
     setInterval(function(){
       if(!vis || lvl === target) return;
       if(reduce) lvl = target;
-      else if(lvl > target) lvl = Math.max(target, lvl - 0.15);
+      else if(lvl > target) lvl = Math.max(target, lvl - 0.45);
       else lvl = Math.min(target, lvl + 1.2);
       draw();
     }, 100);
